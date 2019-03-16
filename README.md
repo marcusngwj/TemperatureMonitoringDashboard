@@ -1,5 +1,5 @@
 ## Description
-A custom UI dashboard for a smart domitory with temperature monitoring. The purpose of this project is to practise on GUI design patterns and web frameworks. View [project requirements](docs/requirements.pdf) for more details.
+A custom UI dashboard for a smart domitory with temperature monitoring. The purpose of this project is to practise on GUI design patterns and web frameworks with Meteor and React. View [project requirements](docs/requirements.pdf) for more details.
 
 ## Set up
 This project was setup on the Windows OS
@@ -19,3 +19,6 @@ meteor npm install
 ```
 meteor
 ```
+## References
+- [Meteor with React Tutorial](https://www.meteor.com/tutorials/react/creating-an-app)
+- [Application Structure](https://guide.meteor.com/structure.html)
