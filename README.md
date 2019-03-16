@@ -22,3 +22,4 @@ meteor
 ## References
 - [Meteor with React Tutorial](https://www.meteor.com/tutorials/react/creating-an-app)
 - [Application Structure](https://guide.meteor.com/structure.html)
+- [SCSS for Meteor](https://atmospherejs.com/fourseven/scss)
