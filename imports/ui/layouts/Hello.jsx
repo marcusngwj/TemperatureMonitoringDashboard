@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../../styles/hello.scss';
 
 export default class Hello extends Component {
   state = {
