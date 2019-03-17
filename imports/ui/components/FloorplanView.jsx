@@ -5,7 +5,7 @@ import RoomView from '../components/RoomView.jsx';
 
 /**
  * SVG was draw using draw.io: https://www.draw.io/
- * SVG was minified using SVG Minifier: https://www.svgminify.com/
+ * SVG was minified using vecta.io: https://vecta.io/nano
  * SVG was beautified using XML Beautifier: http://xmlbeautifier.com/
  */
 
@@ -23,7 +23,7 @@ export default class FloorplanView extends Component {
         
         <g className="outline">
           <path d="M950 880V520h21v10h-11v350z" className="C" />
-          <path d="M1051 520h-80v5h80z" className="door-entrance" />
+          <path d="M1051 525h-80v5h80z" className="door-entrance" />
           <g className="C">
             <path d="M1051 525c0 44.18-35.82 80-80 80v-80" className="door-swing" />
             <path d="M920.75 749.25v-98.5h360v10h-350v88.5z" transform="rotate(90 1100.75 700)" />
@@ -32,7 +32,7 @@ export default class FloorplanView extends Component {
         
         <g className="outline">
           <path d="M0 880V520h100v10H10v350z" className="C" />
-          <path d="M100 520h80v5h-80z" className="door-entrance" />
+          <path d="M100 525h80v5h-80z" className="door-entrance" />
           <g className="C">
             <path d="M100 525c0 44.18 35.82 80 80 80v-80" className="door-swing" />
             <path d="M10 710v-20h360v10H20v10z" transform="rotate(90 190 700)" />
@@ -65,13 +65,13 @@ export default class FloorplanView extends Component {
         
         <g className="outline">
           <path d="M190 880V520h100v10h-90v350z" className="C" />
-          <path d="M290 520h80v5h-80z" className="door-entrance" />
+          <path d="M290 525h80v5h-80z" className="door-entrance" />
           <g className="C">
             <path d="M290 525c0 44.18 35.82 80 80 80v-80" className="door-swing" />
             <path d="M200 710v-20h360v10H210v10z" transform="rotate(90 380 700)" />
             <path d="M380 880V520h21v10h-11v350z" />
           </g>
-          <path d="M481 520h-80v5h80z" className="door-entrance" />
+          <path d="M481 525h-80v5h80z" className="door-entrance" />
           <g className="C">
             <path d="M481 525c0 44.18-35.82 80-80 80v-80" className="door-swing" />
             <path d="M350.75 749.25v-98.5h360v10h-350v88.5z" transform="rotate(90 530.75 700)" />
@@ -80,7 +80,7 @@ export default class FloorplanView extends Component {
         
         <g className="outline">
           <path d="M570 880V520h100v10h-90v350z" className="C" />
-          <path d="M670 520h80v5h-80z" className="door-entrance" />
+          <path d="M670 525h80v5h-80z" className="door-entrance" />
           <g className="C">
             <path d="M670 525c0 44.18 35.82 80 80 80v-80" className="door-swing" />
             <path d="M580 710v-20h360v10H590v10z" transform="rotate(90 760 700)" />
@@ -89,7 +89,7 @@ export default class FloorplanView extends Component {
         
         <g className="outline">
           <path d="M760 880V520h100v10h-90v350z" className="C" />
-          <path d="M860 520h80v5h-80z" className="door-entrance" />
+          <path d="M860 525h80v5h-80z" className="door-entrance" />
           <g className="outline">
             <path d="M860 525c0 44.18 35.82 80 80 80v-80" className="door-swing" />
             <path d="M770 710v-20h360v10H780v10z" transform="rotate(90 950 700)" />
