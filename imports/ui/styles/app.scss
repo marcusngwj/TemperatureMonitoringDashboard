@@ -1,0 +1,12 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  .app-title {
+    text-align: center;
+    font-family: 'Roboto';
+    font-size: 3em;
+  }
+}
