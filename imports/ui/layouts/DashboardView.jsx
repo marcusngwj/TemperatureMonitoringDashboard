@@ -10,10 +10,10 @@ export default class DashboardView extends Component {
       <div className="dashboardview">
         <h1 className="dashboardview-title">Temperature Monitoring Dashboard</h1>
         <ControlView />
-        <ui className="dashboardview-graphics-container">
+        <div className="dashboardview-graphics-container">
           <GraphView />
           <FloorplanView />
-        </ui>
+        </div>
       </div>
     );
   }
