@@ -1,8 +1,7 @@
-import React from 'react';
-import { Meteor } from 'meteor/meteor';
-import { render } from 'react-dom';
-import App from '/imports/ui/layouts/App'
+import DashboardPresenter from '/imports/presenter/DashboardPresenter';
+import DashboardModel from '/imports/model/DashboardModel'; 
+import DashboardView from '/imports/ui/layouts/DashboardView'
 
-Meteor.startup(() => {
-  render(<App />, document.getElementById('react-target'));
-});
+dashboardModel = new DashboardModel();
+
+dashboardPresenter = new DashboardPresenter(DashboardView, dashboardModel);
