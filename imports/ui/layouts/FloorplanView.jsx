@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/floorplan.scss';
 
-import RoomView from '../components/RoomView.jsx';
+import RoomView from '../components/RoomView';
 
 /**
  * SVG was draw using draw.io: https://www.draw.io/
