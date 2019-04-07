@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Dygraph from 'dygraphs';
-import '../styles/graph.scss';
+import '../styles/graphview.scss';
 
 // Incorporating Dygraph into react: https://stackoverflow.com/a/44616600
 export default class GraphView extends Component {
@@ -17,8 +17,8 @@ export default class GraphView extends Component {
 
     //  See options: http://dygraphs.com/options.html
     new Dygraph(this.refs.dygraph, data, {
-      height: 350,
-      width: 1000,
+      height: 430,
+      width: 600,
       animatedZooms: true,
     });
   }

@@ -6,7 +6,15 @@
   
   .dashboardview-title {
     text-align: center;
+    margin: 0;
     font-family: 'Roboto';
     font-size: 3em;
+  }
+
+  .dashboardview-graphics-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 5em;
+    margin-top: 1em;
   }
 }
