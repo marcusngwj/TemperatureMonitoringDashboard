@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/floorplan.scss';
+import '../styles/floorplanview.scss';
 
 import RoomView from '../components/RoomView';
 
@@ -12,7 +12,7 @@ import RoomView from '../components/RoomView';
 export default class FloorplanView extends Component {
   render() {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="550" viewBox="-0.5 -0.5 1247 882" className="floorplan">
+      <svg xmlns="http://www.w3.org/2000/svg" width="600" height="430" viewBox="-0.5 -0.5 1247 882" className="floorplanview">
         <RoomView id="room0" d="M10.5 0h379v300h-379z" x="42" y="26" transform="translate(156.5 128.5)" text="UPPER LEVEL RESIDENTIAL LOUNGE" />
         <RoomView id="room1" d="M10 530h180v340H10z" x="31" y="19" transform="translate(67.5 685.5)" text="SINGLE BEDROOM" />
         <RoomView id="room2" d="M200 530h180v340H200z" x="31" y="19" transform="translate(257.5 685.5)" text="SINGLE BEDROOM" />
