@@ -2,11 +2,23 @@
   &:hover {
     cursor: pointer;
   }
-  
-  .room-background {
-    fill: #f5f5f5;
+
+  .room-background-red {
+    fill: #ff1a1a;
   }
-  
+  .room-background-white {
+    fill: #ffffff;
+  }
+  .room-background-grey {
+    fill: #cccccc;
+  }
+  .room-background-darkBlue {
+    fill: #0000cc;
+  }
+  .room-background-lightBlue {
+    fill: #4da6ff;
+  }
+
   .room-text {
     text-anchor: middle;
     fill: #333;
