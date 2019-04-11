@@ -43,7 +43,7 @@ export default class FloorplanView extends Component {
     this.setState({
       roomVisibilities: newRoomVisibilities
     });
-    this.props.presenterMethods["toggleRoomSelection"];
+    this.props.onToggleRoom();
   }
 
   render() {

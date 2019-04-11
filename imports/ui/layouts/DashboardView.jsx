@@ -18,7 +18,7 @@ export default class DashboardView extends Component {
         <ControlView />
         <div className="dashboardview-graphics-container">
           <GraphView />
-          <FloorplanView presenterMethods={this.props.presenterMethods} />
+          <FloorplanView onToggleRoom={this.props.onToggleRoom} />
         </div>
       </div>
     );

@@ -7,17 +7,9 @@ export default class DashboardPresenter {
     this._view = view;
     this._model = model;
 
-    this.toggleRoomSelection = this.toggleRoomSelection.bind(this);
-
-    this.presenterMethods = {
-      toggleRoomSelection: this.toggleRoomSelection
-    }
-
     Meteor.startup(() => {
-      render(<this._view presenterMethods={this.presenterMethods}/>, document.getElementById("react-target"));
+      render(<this._view onToggleRoom={this.toggleRoomSelection}/>, document.getElementById("react-target"));
     });
-
-    this.toggleRoomSelection();
   }
 
   toggleRoomSelection = () => {
