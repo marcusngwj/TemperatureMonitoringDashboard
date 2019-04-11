@@ -5,8 +5,21 @@ export default class DashboardModel {
 
     this.updateRoomSelection = this.updateRoomSelection.bind(this);
   }
+  
+  updateStartDateTime = () => {
+    console.log("Model is updating Start Date Time...");
+  }
+
+  updateEndDateTime = () => {
+    console.log("Model is updating End Date Time...");
+  }
+
+  updateMaxSamples = () => {
+    console.log("Model is updating Max Samples...");
+  }
 
   updateRoomSelection = () => {
-    console.log("I am from model");
+    console.log("Model is updating room selection...");
   }
+
 }
