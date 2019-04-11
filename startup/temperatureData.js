@@ -3,7 +3,7 @@ import SimpleSchema from "simpl-schema";
 
 td = new Mongo.Collection("temperatureData");
 td.schema = new SimpleSchema({
-  timestamp: { type: String },
+  timestamp: { type: Date },
   value: { type: Array },
 
   "value.$": Object
