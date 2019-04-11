@@ -18,7 +18,7 @@ export default class DashboardView extends Component {
         <ControlView />
         <div className="dashboardview-graphics-container">
           <GraphView />
-          <FloorplanView />
+          <FloorplanView presenterMethods={this.props.presenterMethods} />
         </div>
       </div>
     );
