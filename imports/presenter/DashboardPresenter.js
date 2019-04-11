@@ -8,8 +8,24 @@ export default class DashboardPresenter {
     this._model = model;
 
     Meteor.startup(() => {
-      render(<this._view onToggleRoom={this.toggleRoomSelection}/>, document.getElementById("react-target"));
+      render(<this._view onChangeStartDateTime={this.changeStartDateTime}
+                         onChangeEndDateTime={this.changeEndDateTime}
+                         onChangeMaxSamples={this.changeMaxSamples}
+                         onToggleRoom={this.toggleRoomSelection}
+             />, document.getElementById("react-target"));
     });
+  }
+
+  changeStartDateTime = () => {
+    this._model.updateStartDateTime();
+  }
+
+  changeEndDateTime = () => {
+    this._model.updateEndDateTime();
+  }
+
+  changeMaxSamples = () => {
+    this._model.updateEndDateTime();
   }
 
   toggleRoomSelection = () => {

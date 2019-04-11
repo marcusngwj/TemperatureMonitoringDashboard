@@ -15,7 +15,10 @@ export default class DashboardView extends Component {
         <h1 className="dashboardview-title">
           Temperature Monitoring Dashboard
         </h1>
-        <ControlView />
+        <ControlView onChangeStartDateTime={this.props.onChangeStartDateTime}
+                     onChangeEndDateTime={this.props.onChangeEndDateTime}
+                     onChangeMaxSamples={this.props.onChangeMaxSamples}
+        />
         <div className="dashboardview-graphics-container">
           <GraphView />
           <FloorplanView onToggleRoom={this.props.onToggleRoom} />
