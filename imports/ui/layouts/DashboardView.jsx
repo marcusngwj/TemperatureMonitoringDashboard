@@ -3,17 +3,10 @@ import "../styles/dashboardview.scss";
 import FloorplanView from "./FloorplanView";
 import GraphView from "./GraphView";
 import ControlView from "./ControlView";
-import DashboardPresenter from "../../presenter/DashboardPresenter";
 
 export default class DashboardView extends Component {
   constructor(props) {
     super(props);
-    this.toggleVisiblity = this.toggleVisibility.bind(this);
-  }
-  toggleVisibility(room, currentVisiblity) {
-    // console.log(room);
-    // console.log(currentVisiblity);
-    //Bubble up to DashBoardPresenter then toggle visibility
   }
 
   render() {
@@ -25,7 +18,7 @@ export default class DashboardView extends Component {
         <ControlView />
         <div className="dashboardview-graphics-container">
           <GraphView />
-          <FloorplanView toggleVisiblity={this.toggleVisiblity} />
+          <FloorplanView onToggleRoom={this.props.onToggleRoom} />
         </div>
       </div>
     );

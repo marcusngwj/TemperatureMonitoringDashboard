@@ -8,7 +8,11 @@ export default class DashboardPresenter {
     this._model = model;
 
     Meteor.startup(() => {
-      render(<this._view />, document.getElementById("react-target"));
+      render(<this._view onToggleRoom={this.toggleRoomSelection}/>, document.getElementById("react-target"));
     });
+  }
+
+  toggleRoomSelection = () => {
+    this._model.updateRoomSelection();
   }
 }
