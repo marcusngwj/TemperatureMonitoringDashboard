@@ -9,10 +9,11 @@ export default class ControlView extends Component {
   render() {
     return (
       <div className="controlview-main">
-        <DateTimeView className="start-date-time-view" label="Start"/>
-        <DateTimeView className="end-date-time-view" label="End"/>
+        <div className="datetime-container">
+          <DateTimeView className="start-date-time-view" label="Start"/>
+          <DateTimeView className="end-date-time-view" label="End"/>
+        </div>
         <SliderView className="sliderview" />
-        <FilterButtonView className="filterbuttonview" />
       </div>
     );
   }

@@ -1,14 +1,20 @@
 .controlview-main {
   height: 3em;
   width: 100%;
-  background-color: aquamarine;
+  background-color: #EFEFF4;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
+  margin: 1em 0em;
 
-  .end-date-time-view {
-  
+  .datetime-container{
+    display: flex;
+    flex-direction: row;
+
+    .end-date-time-view {
+      margin-left: 2em;
+    }
   }
 
   .sliderview {
