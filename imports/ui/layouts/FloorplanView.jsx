@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "../styles/floorplanview.scss";
 import "../styles/room.scss";
 
-import { ROOM_COLOR, ROOM_ID } from "../../constants/RoomConstant";
+import { ROOM_ID } from "../../constants/RoomConstant";
 import RoomView from "../components/RoomView";
 
 /**
@@ -14,36 +14,6 @@ import RoomView from "../components/RoomView";
 export default class FloorplanView extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      roomColors: {
-        [ROOM_ID[0]]: ROOM_COLOR.RED,
-        [ROOM_ID[1]]: ROOM_COLOR.RED,
-        [ROOM_ID[2]]: ROOM_COLOR.RED,
-        [ROOM_ID[3]]: ROOM_COLOR.RED,
-        [ROOM_ID[4]]: ROOM_COLOR.RED,
-        [ROOM_ID[5]]: ROOM_COLOR.RED,
-        [ROOM_ID[6]]: ROOM_COLOR.RED
-      },
-      roomVisibilities: {
-        [ROOM_ID[0]]: true,
-        [ROOM_ID[1]]: true,
-        [ROOM_ID[2]]: true,
-        [ROOM_ID[3]]: true,
-        [ROOM_ID[4]]: true,
-        [ROOM_ID[5]]: true,
-        [ROOM_ID[6]]: true
-      }
-    }
-  }
-
-  onRoomClick = (roomId, e) => {
-    let newRoomVisibilities = this.state.roomVisibilities;
-    newRoomVisibilities[roomId] = !newRoomVisibilities[roomId];
-    this.setState({
-      roomVisibilities: newRoomVisibilities
-    });
-    this.props.onToggleRoom();
   }
 
   render() {
@@ -56,51 +26,37 @@ export default class FloorplanView extends Component {
         <RoomView d="M10.5 0h379v300h-379z" x="42" y="26" transform="translate(156.5 128.5)"
           id = {ROOM_ID[0]}
           text = "UPPER LEVEL RESIDENTIAL LOUNGE"
-          onClick = {this.onRoomClick.bind(this, ROOM_ID[0])}
-          isVisible = {this.state.roomVisibilities[ROOM_ID[0]]}
-          color = {this.state.roomColors[ROOM_ID[0]]}
+          onClick = {this.props.onToggleRoom}
         />
         <RoomView d="M10 530h180v340H10z" x="31" y="19" transform="translate(67.5 685.5)"
           id = {ROOM_ID[1]}
           text = "SINGLE BEDROOM"
-          onClick = {this.onRoomClick.bind(this, ROOM_ID[1])}
-          isVisible = {this.state.roomVisibilities[ROOM_ID[1]]}
-          color = {this.state.roomColors[ROOM_ID[1]]}
+          onClick = {this.props.onToggleRoom}
         />
         <RoomView d="M200 530h180v340H200z" x="31" y="19" transform="translate(257.5 685.5)"
           id = {ROOM_ID[2]}
           text = "SINGLE BEDROOM"
-          onClick = {this.onRoomClick.bind(this, ROOM_ID[2])}
-          isVisible = {this.state.roomVisibilities[ROOM_ID[2]]}
-          color = {this.state.roomColors[ROOM_ID[2]]}
+          onClick = {this.props.onToggleRoom}
         />
         <RoomView d="M390 530h180v340H390z" x="31" y="19" transform="translate(447.5 685.5)"
           id = {ROOM_ID[3]}
           text = "SINGLE BEDROOM"
-          onClick = {this.onRoomClick.bind(this, ROOM_ID[3])}
-          isVisible = {this.state.roomVisibilities[ROOM_ID[3]]}
-          color = {this.state.roomColors[ROOM_ID[3]]}
+          onClick = {this.props.onToggleRoom}
         />
         <RoomView d="M580 530h180v340H580z" x="31" y="19" transform="translate(637.5 685.5)"
           id = {ROOM_ID[4]}
           text = "SINGLE BEDROOM"
-          onClick = {this.onRoomClick.bind(this, ROOM_ID[4])}
-          isVisible = {this.state.roomVisibilities[ROOM_ID[4]]}
-          color = {this.state.roomColors[ROOM_ID[4]]}
+          onClick = {this.props.onToggleRoom}
         />
         <RoomView d="M770 530h180v340H770z" x="31" y="19" transform="translate(827.5 685.5)"
           id = {ROOM_ID[5]}
           text = "SINGLE BEDROOM"
-          onClick = {this.onRoomClick.bind(this, ROOM_ID[5])}
-          isVisible = {this.state.roomVisibilities[ROOM_ID[5]]}
-          color = {this.state.roomColors[ROOM_ID[5]]}
+          onClick = {this.props.onToggleRoom}
         />
         <RoomView d="M960 530h180v340H960z" x="31" y="19" transform="translate(1017.5 685.5)"
           id = {ROOM_ID[6]}
           text = "SINGLE BEDROOM"
-          onClick = {this.onRoomClick.bind(this, ROOM_ID[6])}
-          isVisible = {this.state.roomVisibilities[ROOM_ID[6]]}
-          color = {this.state.roomColors[ROOM_ID[6]]}
+          onClick = {this.props.onToggleRoom}
         />
 
         <g className="outline">
