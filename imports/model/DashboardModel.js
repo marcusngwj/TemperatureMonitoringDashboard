@@ -6,12 +6,14 @@ export default class DashboardModel {
     this.updateRoomSelection = this.updateRoomSelection.bind(this);
   }
   
-  updateStartDateTime = () => {
+  updateStartDateTime = (dateTime) => {
     console.log("Model is updating Start Date Time...");
+    console.log(dateTime);
   }
 
-  updateEndDateTime = () => {
+  updateEndDateTime = (dateTime) => {
     console.log("Model is updating End Date Time...");
+    console.log(dateTime);
   }
 
   updateMaxSamples = () => {

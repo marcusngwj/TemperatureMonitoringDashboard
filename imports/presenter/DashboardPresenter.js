@@ -16,12 +16,12 @@ export default class DashboardPresenter {
     });
   }
 
-  changeStartDateTime = () => {
-    this._model.updateStartDateTime();
+  changeStartDateTime = (dateTime) => {
+    this._model.updateStartDateTime(dateTime);
   }
 
-  changeEndDateTime = () => {
-    this._model.updateEndDateTime();
+  changeEndDateTime = (dateTime) => {
+    this._model.updateEndDateTime(dateTime);
   }
 
   changeMaxSamples = () => {
