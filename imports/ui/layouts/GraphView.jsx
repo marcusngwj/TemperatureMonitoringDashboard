@@ -20,7 +20,9 @@ export default class GraphView extends Component {
       height: 430,
       width: 600,
       animatedZooms: true,
+      legend: 'always',
       labelsDiv: this.refs.legend,
+      hideOverlayOnMouseOut: false,
       xlabel: "Date",
       ylabel: "Temperature / °C"
     });
@@ -29,8 +31,8 @@ export default class GraphView extends Component {
   render() {
     return (
       <div className="graphview">
-        <div ref="legend"></div>
         <div ref="dygraph"></div>
+        <div ref="legend" className="legend"></div>
       </div>
     );
   }
