@@ -62,36 +62,136 @@ function updateData(currRoomId, currTimestamp, currTemperature) {
 function getData(startDate, endDate, startTime, endTime, numSamples) { }
 
 
-function FindBetweenData(startDate, endDate, startTime, endTime) {
+function sortData(betweenData, numSamples) {
+  //Data received is of the following format now: timstamp + array
+  //Obtain random data
+  //Get the start and the end with
+
+  var roomList = [[], [], [], [], [], [], []];
+  //To-do
+  if (numSamples >= betweenData.length) {
+    for (i = 0; i < betweenData.length; i++) {
+      var numData = betweenData[i].value.length;
+      for (j = 0; j < numData; j++) {
+        var currentTimestamp = betweenData[i].timestamp;
+        var currentValue = betweenData[i].value[j];
+        var splitValue = currentValue.split(",");
+        var currentRoomid = splitValue[0];
+        var currentTemperature = splitValue[1];
+        var stringToPush = currentTimestamp.toISOString() + "," + currentTemperature;
+
+        roomList[parseInt(currentRoomid)].push(stringToPush);
+      }
+    }
+  } else {
+    roomList = getRandomizedSample(betweenData, numSamples);
+  }
+  console.log(roomList[0][0]);
+  return roomList;
+}
+
+function getRandomizedSample(betweenData, numSamples) {
+  var roomList = [[], [], [], [], [], [], []];
+  //get the first timestamp and the last timestamp
+  if (numSamples == 1) {
+    var firstData = betweenData[0];
+    for (m = 0; i < firstData.value.length; i++) {
+      var currentValue = firstData.value[m];
+      var splitValue = currentValue.split(",");
+      var currentRoomid = splitValue[0];
+      var currentTemperature = splitValue[1];
+      var stringToPush = firstDataTimestamp.toISOString() + "," + currentTemperature;
+      roomList[parseInt(currentRoomid)].push(stringToPush);
+    }
+    return roomList;
+  }
+  var firstData = betweenData[0];
+  var lastData = betweenData[betweenData.length - 1];
+
+  var firstDataTimestamp = betweenData[0].timestamp;
+  var lastDataTimestamp = betweenData[betweenData.length - 1].timestamp;
+
+  for (i = 0; i < firstData.value.length; i++) {
+    var currentValue = firstData.value[i];
+    var splitValue = currentValue.split(",");
+    var currentRoomid = splitValue[0];
+    var currentTemperature = splitValue[1];
+    var stringToPush = firstDataTimestamp.toISOString() + "," + currentTemperature;
+    roomList[parseInt(currentRoomid)].push(stringToPush);
+  }
+
+  for (k = 0; k < lastData.value.length; k++) {
+    var currentValue = lastData.value[k];
+    var splitValue = currentValue.split(",");
+    var currentRoomid = splitValue[0];
+    var currentTemperature = splitValue[1];
+    var stringToPush = lastDataTimestamp.toISOString() + "," + currentTemperature;
+    roomList[parseInt(currentRoomid)].push(stringToPush);
+  }
+
+  var map = new Map();
+  map.set(firstDataTimestamp.toISOString(), "1");
+  map.set(lastDataTimestamp.toISOString(), "1");
+  var numData = betweenData.length;
+
+  var countInterval = parseInt(numData / numSamples);
+  var loopIdx = 1;
+  var countSamples = 1;
+  // console.log("countInterval is " + countInterval);
+  if (countInterval = 1) {
+    countInterval = 2;
+  }
+  if (countInterval > 1) {
+    for (idx = 1; (countSamples <= numSamples - 2); idx += countInterval) {
+
+      if (idx >= numData && countSamples <= numSamples - 2) {
+        idx = loopIdx + 1;
+        loopIdx++;
+      } else if (idx >= numData && countSamples > numSamples - 2) {
+        break;
+      }
+
+      var currentTimestamp = betweenData[idx].timestamp;
+      if (map.get(currentTimestamp.toISOString()) != "1") {
+        countSamples++;
+        // console.log("countSamples " + countSamples);
+        // console.log("idx is " + idx);
+        map.set(currentTimestamp.toISOString(), "1");
+        for (j = 0; j < betweenData[idx].value.length; j++) {
+          var currentValue = betweenData[idx].value[j];
+          var splitValue = currentValue.split(",");
+          var currentRoomid = splitValue[0];
+          var currentTemperature = splitValue[1];
+          var stringToPush = currentTimestamp.toISOString() + "," + currentTemperature;
+
+          roomList[parseInt(currentRoomid)].push(stringToPush);
+        }
+      }
+    }
+  }
+  return roomList;
+}
+function FindBetweenData(startDate, endDate, startTime, endTime, numSamples) {
   var startTimestamp = startDate + "T" + endTime + "Z";
   var endTimestamp = endDate + "T" + endTime + "Z";
+  // console.log(startTimestamp);
+  // console.log(endTimestamp);
   var betweenData = temperatureData.find({
     timestamp: {
-      $gte: Date(new Date(startTimestamp)),
-      $lt: Date(new Date(endTimestamp))
+      $gte: (new Date(startTimestamp)),
+      $lt: (new Date(endTimestamp))
     }
-  })
-  console.log("test");
+  }).fetch()
+  // console.log(betweenData);
+  var sortedData = sortData(betweenData, numSamples);
   //console.log(betweenData);
-  return betweenData;
+  return sortedData;
 }
 if (Meteor.isServer) {
   Meteor.methods({
     queryData: function (startDate, endDate, startTime, endTime, numSamples) {
-      console.log(startDate);
-      var requiredData = FindBetweenData(startDate, endDate, startTime, endTime);
-      var startTimestamp = startDate + "T" + endTime + "Z";
-      var endTimestamp = endDate + "T" + endTime + "Z";
-      console.log("startTimeStamp is " + startTimestamp);
-      console.log("endTimeStamp is " + endTimestamp);
-      var betweenData = temperatureData.find({
-        timestamp: {
-          $gte: (new Date(startTimestamp)),
-          $lt: (new Date(endTimestamp))
-        }
-      }).fetch();
-      // console.log("test");
-      console.log(betweenData);
+      var sortedData = FindBetweenData(startDate, endDate, startTime, endTime, numSamples);
+
       return "test";
       // return betweenData;
       // return requiredData;
