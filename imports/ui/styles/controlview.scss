@@ -1,5 +1,17 @@
-.controlview {
-    height: 100px;
-    width: 100%;
-    background-color: aquamarine;
+.controlview-main {
+  height: 3em;
+  width: 100%;
+  background-color: aquamarine;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .end-date-time-view {
+  
+  }
+
+  .sliderview {
+    
+  }
 }

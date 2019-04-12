@@ -1,38 +1,16 @@
 import React, { Component } from "react";
 import "../styles/room.scss";
+import { ROOM_COLOR } from "../../constants/RoomConstant";
 
 export default class RoomView extends Component {
-  constructor(props, defaultColor) {
+  constructor(props) {
     super(props);
-    this.state = { isToggleOn: true };
-
-    this.defaultColor = "red";
-    this.handleOnClick = this.handleOnClick.bind(this);
-    // this.setRoomColor = this.setRoomColor.bind(this);
-    //this.setRoomVisiblity = this.setRoomVisiblity.bind(this);
   }
-  handleOnClick = () => {
-    //Sends Notification to Presenter to 'hide' the graph
-    console.log("state is " + this.state.roomColor);
-    this.setState(state => ({
-      isToggleOn: !state.isToggleOn,
-      roomColor: "white"
-    }));
-  };
-  // setRoomColor = newRoomColor => {
-  //   this.setState(state => ({
-  //     isToggleOn: !state.isToggleOn,
-  //     roomColor: newRoomColor
-  //   }));
-  // };
-  //setRoomVisiblity = () => {};
+
   render() {
     return (
-      <g onClick={this.handleOnClick} className="room">
-        {this.state.isToggleOn ? "ON" : "OFF"}
-        <path d={this.props.d} fill={this.state.roomColor} />
-
-        {this.props.setRoomVisibility(this.props.id, this.state.isToggleOn)}
+      <g onClick={this.props.onClick} className="roomview">
+        <path d={this.props.d} className={this.props.isVisible ? this.props.color : ROOM_COLOR.WHITE} />
         <text
           x={this.props.x}
           y={this.props.y}
