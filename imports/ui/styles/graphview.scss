@@ -1,3 +1,19 @@
 .graphview {
-    
+  display: flex;
+  flex-direction: row;
+
+  .legend {
+    padding-left: 1em;
+    width: 5em;
+  }
+
+  .dygraph-xlabel {
+    text-align: center;
+    margin-top: 1em;
+  }
+
+  .dygraph-ylabel {
+    transform: rotate(-90deg);
+    text-align: center;
+  }
 }
