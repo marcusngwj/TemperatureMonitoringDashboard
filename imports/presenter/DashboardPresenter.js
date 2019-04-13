@@ -60,6 +60,6 @@ export default class DashboardPresenter {
   }
 
   notifyGraphDataChanged = (graphData) => {
-    this._view.updateGraph(graphData);
+    this._view.updateGraph(graphData.join(""));
   }
 }

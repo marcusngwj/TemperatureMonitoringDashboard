@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { temperatureData } from "../startup/temperatureData";
 import Papa from "papaparse";
+import moment from 'moment';
 
 Meteor.startup(() => {
   if (temperatureData.find().count() === 0) {
@@ -70,31 +71,40 @@ function sortData(betweenData, numSamples) {
   var roomList = [[], [], [], [], [], [], []];
   //To-do
   if (numSamples >= betweenData.length) {
+    let graphFriendlyDataList = [];
+
     for (i = 0; i < betweenData.length; i++) {
       var numData = betweenData[i].value.length;
+      var currentTimestamp = betweenData[i].timestamp;
+      let timestampAndTemperatures = ["","","","","","",""];
+
       for (j = 0; j < numData; j++) {
-        var currentTimestamp = betweenData[i].timestamp;
         var currentValue = betweenData[i].value[j];
         var splitValue = currentValue.split(",");
         var currentRoomid = splitValue[0];
         var currentTemperature = splitValue[1];
         var stringToPush = currentTimestamp.toISOString() + "," + currentTemperature;
-
         roomList[parseInt(currentRoomid)].push(stringToPush);
+
+        timestampAndTemperatures[currentRoomid] = currentTemperature.toString();
       }
+      graphFriendlyDataList.push(moment(currentTimestamp).format('YYYY-MM-DD HH:mm')+","+timestampAndTemperatures.toString()+"\n");
     }
-  } else {
-    roomList = getRandomizedSample(betweenData, numSamples);
+    return [roomList, graphFriendlyDataList];
+  } 
+  else {
+    return getRandomizedSample(betweenData, numSamples);
   }
-  // console.log(roomList[0].length);
-  return roomList;
 }
 
 function getRandomizedSample(betweenData, numSamples) {
   var roomList = [[], [], [], [], [], [], []];
   //get the first timestamp and the last timestamp
   if (numSamples == 1) {
+    let graphFriendlyDataList = [];
+    let timestampAndTemperatures = ["","","","","","",""];
     var firstData = betweenData[0];
+
     for (m = 0; i < firstData.value.length; i++) {
       var currentValue = firstData.value[m];
       var splitValue = currentValue.split(",");
@@ -102,9 +112,12 @@ function getRandomizedSample(betweenData, numSamples) {
       var currentTemperature = splitValue[1];
       var stringToPush = firstDataTimestamp.toISOString() + "," + currentTemperature;
       roomList[parseInt(currentRoomid)].push(stringToPush);
+      timestampAndTemperatures[currentRoomid] = currentTemperature.toString();
     }
-    return roomList;
+    graphFriendlyDataList.push(moment(firstDataTimestamp).format('YYYY-MM-DD HH:mm')+","+timestampAndTemperatures.toString()+"\n");
+    return [roomList, graphFriendlyDataList];
   }
+
   var firstData = betweenData[0];
   var lastData = betweenData[betweenData.length - 1];
 
@@ -167,7 +180,7 @@ function getRandomizedSample(betweenData, numSamples) {
       }
     }
   }
-  return roomList;
+  return [roomList, []];
 }
 function FindBetweenData(startDateTime, endDateTime, numSamples) {
   var startTimestamp = startDateTime;
@@ -180,7 +193,7 @@ function FindBetweenData(startDateTime, endDateTime, numSamples) {
   }).fetch()
   // console.log(betweenData);
   var sortedData = sortData(betweenData, numSamples);
-  //console.log(betweenData);
+  // console.log(betweenData);
   return sortedData;
 }
 if (Meteor.isServer) {

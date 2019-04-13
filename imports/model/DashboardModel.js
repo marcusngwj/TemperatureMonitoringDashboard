@@ -62,11 +62,13 @@ export default class DashboardModel {
       });
       let result = await promise;
 
+      let dataForCalculation = result[0];
+      let dataForGraph = result[1];
 
-      this.averageTempList = this.calculateAverageTemperature(result);
+      this.averageTempList = this.calculateAverageTemperature(dataForCalculation);
       this.colorList = this.calculateColor(this.averageTempList);
       this.notifyRoomsColorChanged(this.colorList);
-      this.notifyGraphDataChanged(result);
+      this.notifyGraphDataChanged(dataForGraph);
       console.log(this.averageTempList);
       return result;
     }
