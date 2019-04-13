@@ -8,7 +8,8 @@ export default class DashboardPresenter {
     this._model = model;
 
     Meteor.startup(() => {
-      render(<this._view onChangeStartDateTime={this.changeStartDateTime}
+      render(<this._view onRef={ref => (this._view = ref)}                  // To access methods from child: https://github.com/kriasoft/react-starter-kit/issues/909#issuecomment-252969542
+                         onChangeStartDateTime={this.changeStartDateTime}
                          onChangeEndDateTime={this.changeEndDateTime}
                          onChangeMaxSamples={this.changeMaxSamples}
                          onToggleRoom={this.toggleRoomSelection}
@@ -18,6 +19,7 @@ export default class DashboardPresenter {
 
   changeStartDateTime = (dateTime) => {
     this._model.updateStartDateTime(dateTime);
+    this._view.updateRoomColor("room0", "room-background-red"); // To be called in model. Move it to model
   }
 
   changeEndDateTime = (dateTime) => {
