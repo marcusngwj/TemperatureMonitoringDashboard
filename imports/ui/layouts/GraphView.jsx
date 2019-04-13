@@ -32,18 +32,23 @@ export default class GraphView extends Component {
     });
   }
 
+  componentWillUnmount() {
+    this.props.onRef(undefined);
+  }
+
   interactWithGraph = () => {
     let startDateTime = this.dygraph.xAxisRange()[0];
     let endDateTime = this.dygraph.xAxisRange()[1];
     this.props.onInteractWithGraph(startDateTime, endDateTime);
   }
 
-  componentWillUnmount() {
-    this.props.onRef(undefined);
-  }
-
   updateGraph = () => {
     console.log("Inside graphview");
+  }
+
+  setVisibilityOfLinePlotForRoom = (roomIndex, isVisible) => {
+    this.dygraph.setVisibility(roomIndex, isVisible);
+    console.log("Setting room visibility");
   }
 
   render() {

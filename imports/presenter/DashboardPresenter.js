@@ -47,7 +47,9 @@ export default class DashboardPresenter {
   }
 
   notifyRoomsVisibilityChanged = (roomVisibilityList) => {
-    console.log(roomVisibilityList);
+    for (let i=0; i<roomVisibilityList.length; i++) {
+      this._view.updateGraphVisibilityForRoom(i, roomVisibilityList[i]);
+    }
   }
 
   notifyRoomsColorChanged = (colorList) => {
