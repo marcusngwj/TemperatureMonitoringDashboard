@@ -10,15 +10,19 @@ export default class DashboardView extends Component {
   }
 
   componentDidMount() {
-    this.props.onRef(this)
+    this.props.onRef(this);
   }
 
   componentWillUnmount() {
-    this.props.onRef(undefined)
+    this.props.onRef(undefined);
   }
 
   updateRoomColor = (roomId, color) => {
     this.floorplanView.updateRoomColor(roomId, color);
+  }
+
+  updateGraph = () => {
+    this.graphView.updateGraph();
   }
 
   render() {
@@ -32,7 +36,9 @@ export default class DashboardView extends Component {
                      onChangeMaxSamples={this.props.onChangeMaxSamples}
         />
         <div className="dashboardview-graphics-container">
-          <GraphView />
+          <GraphView onRef={ref => (this.graphView = ref)} 
+                     onInteractWithGraph={this.props.onInteractWithGraph}
+          />
           <FloorplanView onRef={ref => (this.floorplanView = ref)}
                          onToggleRoom={this.props.onToggleRoom} 
           />
