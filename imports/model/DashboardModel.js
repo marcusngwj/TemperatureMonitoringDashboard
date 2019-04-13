@@ -10,6 +10,7 @@ export default class DashboardModel {
     this.roomModels = [];
     this.colorList = [];
     this.averageTempList = [];
+    this.numSamples = 8000;
     this.result = this.queryRoom(this.startDateTime, this.endDateTime, "both");
     // console.log("here");
     // console.log(this.result);
@@ -23,20 +24,25 @@ export default class DashboardModel {
   }
 
   updateStartDateTime = (dateTime) => {
-    console.log("Start Time: " + dateTime.toISOString())
+    // console.log("Start Time: " + dateTime.toISOString())
     this.queryRoom(dateTime.toISOString(), null, "start");
-    console.log(this.averageTempList);
-    this.notifyRoomsColorChanged(this.colorList);
+    // console.log("Finish queryRoom");
+
+    // this.notifyRoomsColorChanged(this.colorList);
   }
 
   updateEndDateTime = (dateTime) => {
-    console.log("End Time: " + dateTime.toISOString())
-    this.queryRoom(dateTime.toISOString(), null, "end");
-    this.notifyRoomsColorChanged(this.colorList);
+    // console.log("End Time: " + dateTime.toISOString())
+    // console.log("Finish queryRoom");
+
+    this.queryRoom(null, dateTime.toISOString(), "end");
+
+    // this.notifyRoomsColorChanged(this.colorList);
   }
 
   updateMaxSamples = (numSamples) => {
     console.log("Num Samples chosen: " + numSamples);
+    this.numSamples = numSamples;
   }
 
   // RoomIndex != roomId. RoomIndex is just the number
@@ -55,19 +61,24 @@ export default class DashboardModel {
         this.startDateTime = initial;
         this.endDateTime = end;
       }
-      var numSamples = 8000;
+
       let promise = new Promise((resolve, reject) => {
-        Meteor.call("queryData", this.startDateTime, this.endDateTime, numSamples, (err, res) => {
+        Meteor.call("queryData", this.startDateTime, this.endDateTime, this.numSamples, (err, res) => {
           if (err) reject('Something went wrong');
-          setTimeout(() => resolve(res), 2000);
+          setTimeout(() => resolve(res), 500);
         });
       });
       let result = await promise;
+
+
       this.averageTempList = this.calculateAverageTemperature(result);
       this.colorList = this.calculateColor(this.averageTempList);
+      this.notifyRoomsColorChanged(this.colorList);
+      console.log(this.averageTempList);
       return result;
     }
   }
+
 
   calculateAverageTemperature = (result) => {
 
