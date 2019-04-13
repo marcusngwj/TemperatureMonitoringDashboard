@@ -7,7 +7,7 @@ export default class RoomView extends Component {
     super(props);
 
     this.state = {
-      color: ROOM_COLOR.DARK_BLUE,
+      color: ROOM_COLOR.LIGHT_BLUE,
       isVisible: true
     }
   }
@@ -30,7 +30,8 @@ export default class RoomView extends Component {
     this.setState({
       isVisible: !this.state.isVisible
     });
-    this.props.onClick(this.props.id);
+    console.log(this.state.color);
+    this.props.onToggleSelection(this.props.id);
   }
 
   render() {

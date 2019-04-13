@@ -1,12 +1,13 @@
 import { Meteor } from "meteor/meteor";
 import { Promise } from 'meteor/promise';
 import { ROOM_COLOR } from "../constants/RoomConstant";
+
 export default class DashboardModel {
   constructor() {
-    this.selectedRooms = [true, true, true, true, true, true, true];
-    this.roomModels = [];
     this.startDateTime = "2013-01-01T05:00:00Z";
     this.endDateTime = "2013-12-12T05:00:00Z";
+    this.roomSelectionList = [true, true, true, true, true, true, true];
+    this.roomModels = [];
     this.colorList = [];
     this.averageTempList = [];
     this.result = this.queryRoom(this.startDateTime, this.endDateTime, "both");
@@ -14,27 +15,34 @@ export default class DashboardModel {
     // console.log(this.result);
     // this.colorList = this.calculateRoomColor(this.result);
     this.updateRoomSelection = this.updateRoomSelection.bind(this);
+  }
 
+  setCallbacks = (notifyRoomsSelectionChanged, notifyRoomsColorChanged) => {
+    this.notifyRoomsSelectionChanged = notifyRoomsSelectionChanged;
+    this.notifyRoomsColorChanged = notifyRoomsColorChanged;
   }
 
   updateStartDateTime = (dateTime) => {
-    console.log("Model is updating Start Date Time...");
-    console.log(dateTime.toISOString())
+    console.log("Start Time: " + dateTime.toISOString())
     this.queryRoom(dateTime.toISOString(), null, "start");
+    console.log(this.averageTempList);
+    this.notifyRoomsColorChanged(this.colorList);
   }
 
   updateEndDateTime = (dateTime) => {
-    console.log("Model is updating End Date Time...");
-    console.log(dateTime.toISOString())
+    console.log("End Time: " + dateTime.toISOString())
     this.queryRoom(dateTime.toISOString(), null, "end");
+    this.notifyRoomsColorChanged(this.colorList);
   }
 
   updateMaxSamples = () => {
     console.log("Model is updating Max Samples...");
   }
 
-  updateRoomSelection = () => {
-    console.log("Model is updating room selection...");
+  // RoomIndex != roomId. RoomIndex is just the number
+  updateRoomSelection = (roomIndex) => {
+    this.roomSelectionList[roomIndex] = !this.roomSelectionList[roomIndex];
+    this.notifyRoomsSelectionChanged(this.roomSelectionList);
   }
 
   queryRoom = async (initial, end, point) => {
@@ -79,9 +87,11 @@ export default class DashboardModel {
 
     return averageTempList;
   }
+
   getSpecificRoomIdAverageTemperature = (roomId) => {
     return this.averageTempList[roomId];
   }
+
   calculateColor = (averageTempList) => {
     let colorList = [];
     for (let i = 0; i < averageTempList.length; i++) {
@@ -96,7 +106,6 @@ export default class DashboardModel {
       }
     }
     return colorList;
-    //this.colorList = colorList;
   }
 
 }

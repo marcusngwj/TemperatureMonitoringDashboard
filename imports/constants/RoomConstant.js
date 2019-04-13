@@ -8,3 +8,7 @@ export const ROOM_COLOR = {
 };
 
 export const ROOM_ID = ['room0', 'room1', 'room2', 'room3', 'room4', 'room5', 'room6'];
+
+export const getRoomIndexFromId = (roomId) => {
+  return roomId.slice(-1);
+}
