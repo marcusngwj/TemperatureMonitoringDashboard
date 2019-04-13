@@ -20,15 +20,16 @@ export default class DateTimeView extends Component {
       moment
     });
 
-    this.props.onChange(this.state.moment);
+    this.props.onChange(moment);
   }
 
   render() {
     return (
       <div className={this.props.className}>
         <DatetimePickerTrigger className="datetimeview-main"
-          moment={this.state.moment}
-          onChange={this.handleChange}>
+                               onChange={this.handleChange}
+                               moment={this.state.moment}
+        >
           <div className="datetimeview-background">
             <span>{this.props.label}</span>
             <input value={this.state.moment.format('YYYY-MM-DD   LT')} className="datetimeview-textvalue-area" type="text" readOnly />
