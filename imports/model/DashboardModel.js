@@ -6,7 +6,7 @@ export default class DashboardModel {
   constructor() {
     this.startDateTime = "2013-01-01T05:00:00Z";
     this.endDateTime = "2013-12-12T05:00:00Z";
-    this.roomSelectionList = [true, true, true, true, true, true, true];
+    this.roomVisibilityList = [true, true, true, true, true, true, true];
     this.roomModels = [];
     this.colorList = [];
     this.averageTempList = [];
@@ -14,11 +14,11 @@ export default class DashboardModel {
     // console.log("here");
     // console.log(this.result);
     // this.colorList = this.calculateRoomColor(this.result);
-    this.updateRoomSelection = this.updateRoomSelection.bind(this);
+    this.updateRoomVisibility = this.updateRoomVisibility.bind(this);
   }
 
-  setCallbacks = (notifyRoomsSelectionChanged, notifyRoomsColorChanged) => {
-    this.notifyRoomsSelectionChanged = notifyRoomsSelectionChanged;
+  setCallbacks = (notifyRoomsVisibilityChanged, notifyRoomsColorChanged) => {
+    this.notifyRoomsVisibilityChanged = notifyRoomsVisibilityChanged;
     this.notifyRoomsColorChanged = notifyRoomsColorChanged;
   }
 
@@ -40,9 +40,9 @@ export default class DashboardModel {
   }
 
   // RoomIndex != roomId. RoomIndex is just the number
-  updateRoomSelection = (roomIndex) => {
-    this.roomSelectionList[roomIndex] = !this.roomSelectionList[roomIndex];
-    this.notifyRoomsSelectionChanged(this.roomSelectionList);
+  updateRoomVisibility = (roomIndex) => {
+    this.roomVisibilityList[roomIndex] = !this.roomVisibilityList[roomIndex];
+    this.notifyRoomsVisibilityChanged(this.roomVisibilityList);
   }
 
   queryRoom = async (initial, end, point) => {

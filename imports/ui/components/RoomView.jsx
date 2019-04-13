@@ -31,7 +31,7 @@ export default class RoomView extends Component {
       isVisible: !this.state.isVisible
     });
     console.log(this.state.color);
-    this.props.onToggleSelection(this.props.id);
+    this.props.onToggleVisibility(this.props.id);
   }
 
   render() {

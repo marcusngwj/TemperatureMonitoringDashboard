@@ -9,7 +9,7 @@ export default class DashboardPresenter {
   constructor(view, model) {
     this._view = view;
     this._model = model;
-    this._model.setCallbacks(this.notifyRoomsSelectionChanged,
+    this._model.setCallbacks(this.notifyRoomsVisibilityChanged,
                              this.notifyRoomsColorChanged);
 
     Meteor.startup(() => {
@@ -17,7 +17,7 @@ export default class DashboardPresenter {
                          onChangeStartDateTime={this.changeStartDateTime}
                          onChangeEndDateTime={this.changeEndDateTime}
                          onChangeMaxSamples={this.changeMaxSamples}
-                         onToggleRoomSelection={this.toggleRoomSelection}
+                         onToggleRoomVisibility={this.toggleRoomVisibility}
                          onInteractWithGraph={this.interactWithGraph}
              />, document.getElementById("react-target"));
     });
@@ -35,9 +35,9 @@ export default class DashboardPresenter {
     this._model.updateMaxSamples(numSamples);
   }
 
-  toggleRoomSelection = (roomId) => {
+  toggleRoomVisibility = (roomId) => {
     let roomIndex = getRoomIndexFromId(roomId);
-    this._model.updateRoomSelection(roomIndex);
+    this._model.updateRoomVisibility(roomIndex);
   }
 
   interactWithGraph = (startDateTime, endDateTime) => {
@@ -46,8 +46,8 @@ export default class DashboardPresenter {
     console.log(moment(startDateTime), moment(endDateTime));
   }
 
-  notifyRoomsSelectionChanged = (roomSelectionList) => {
-    console.log(roomSelectionList);
+  notifyRoomsVisibilityChanged = (roomVisibilityList) => {
+    console.log(roomVisibilityList);
   }
 
   notifyRoomsColorChanged = (colorList) => {

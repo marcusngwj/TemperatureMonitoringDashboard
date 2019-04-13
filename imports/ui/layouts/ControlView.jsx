@@ -3,7 +3,6 @@ import '../styles/controlview.scss';
 
 import DateTimeView from '../components/DateTimeView';
 import SliderView from '../components/SliderView';
-import FilterButtonView from '../components/FilterButtonView';
 
 export default class ControlView extends Component {
   render() {
