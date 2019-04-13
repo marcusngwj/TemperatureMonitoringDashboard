@@ -40,7 +40,7 @@ export default class DashboardView extends Component {
                      onInteractWithGraph={this.props.onInteractWithGraph}
           />
           <FloorplanView onRef={ref => (this.floorplanView = ref)}
-                         onToggleRoomSelection={this.props.onToggleRoomSelection} 
+                         onToggleRoomVisibility={this.props.onToggleRoomVisibility} 
           />
         </div>
       </div>

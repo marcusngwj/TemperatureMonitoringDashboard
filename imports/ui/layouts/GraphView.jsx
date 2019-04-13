@@ -3,6 +3,7 @@ import Dygraph from 'dygraphs';
 import '../styles/graphview.scss';
 
 // Incorporating Dygraph into react: https://stackoverflow.com/a/44616600
+// Dygraph API: http://dygraphs.com/jsdoc/symbols/Dygraph.html
 export default class GraphView extends Component {
   componentDidMount() {
     this.props.onRef(this);
