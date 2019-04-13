@@ -2,6 +2,8 @@ import React from "react";
 import { Meteor } from "meteor/meteor";
 import { render } from "react-dom";
 
+import moment from 'moment';
+
 export default class DashboardPresenter {
   constructor(view, model) {
     this._view = view;
@@ -13,6 +15,7 @@ export default class DashboardPresenter {
                          onChangeEndDateTime={this.changeEndDateTime}
                          onChangeMaxSamples={this.changeMaxSamples}
                          onToggleRoom={this.toggleRoomSelection}
+                         onInteractWithGraph={this.interactWithGraph}
              />, document.getElementById("react-target"));
     });
   }
@@ -32,5 +35,11 @@ export default class DashboardPresenter {
 
   toggleRoomSelection = () => {
     this._model.updateRoomSelection();
+  }
+
+  interactWithGraph = (startDateTime, endDateTime) => {
+    // TODO: Change the startdate in model
+    // TODO: Change end date in model
+    console.log(moment(startDateTime), moment(endDateTime));
   }
 }

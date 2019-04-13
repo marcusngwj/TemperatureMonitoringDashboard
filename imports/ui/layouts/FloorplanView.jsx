@@ -27,11 +27,11 @@ export default class FloorplanView extends Component {
   }
 
   componentDidMount() {
-    this.props.onRef(this)
+    this.props.onRef(this);
   }
 
   componentWillUnmount() {
-    this.props.onRef(undefined)
+    this.props.onRef(undefined);
   }
 
   updateRoomColor = (roomId, color) => {
