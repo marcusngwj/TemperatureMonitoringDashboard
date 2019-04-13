@@ -9,7 +9,8 @@ export default class DashboardPresenter {
   constructor(view, model) {
     this._view = view;
     this._model = model;
-    this._model.setCallbacks(this.notifyRoomsVisibilityChanged,
+    this._model.setCallbacks(this.notifyDateTimeChanged,
+                             this.notifyRoomsVisibilityChanged,
                              this.notifyRoomsColorChanged,
                              this.notifyGraphDataChanged);
 
@@ -45,6 +46,11 @@ export default class DashboardPresenter {
     // TODO: Change the startdate in model
     // TODO: Change end date in model
     console.log(moment(startDateTime), moment(endDateTime));
+  }
+
+  notifyDateTimeChanged = (startDateTime, endDateTime) => {
+    console.log("[DashboardPresenter] notifyDateTimeChanged");
+    this._view.updateDateTime(moment(startDateTime), moment(endDateTime));
   }
 
   notifyRoomsVisibilityChanged = (roomVisibilityList) => {

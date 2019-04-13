@@ -17,6 +17,11 @@ export default class DashboardView extends Component {
     this.props.onRef(undefined);
   }
 
+  updateDateTime = (startDateTime, endDateTime) => {
+    this.controlView.updateStartDateTime(startDateTime);
+    this.controlView.updateEndDateTime(endDateTime);
+  }
+
   updateRoomColor = (roomId, color) => {
     this.floorplanView.updateRoomColor(roomId, color);
   }
@@ -35,7 +40,8 @@ export default class DashboardView extends Component {
         <h1 className="dashboardview-title">
           Temperature Monitoring Dashboard
         </h1>
-        <ControlView onChangeStartDateTime={this.props.onChangeStartDateTime}
+        <ControlView onRef={ref => (this.controlView = ref)} 
+                     onChangeStartDateTime={this.props.onChangeStartDateTime}
                      onChangeEndDateTime={this.props.onChangeEndDateTime}
                      onChangeMaxSamples={this.props.onChangeMaxSamples}
         />

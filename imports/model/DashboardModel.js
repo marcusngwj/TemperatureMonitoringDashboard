@@ -18,7 +18,8 @@ export default class DashboardModel {
     this.updateRoomVisibility = this.updateRoomVisibility.bind(this);
   }
 
-  setCallbacks = (notifyRoomsVisibilityChanged, notifyRoomsColorChanged, notifyGraphDataChanged) => {
+  setCallbacks = (notifyDateTimeChanged, notifyRoomsVisibilityChanged, notifyRoomsColorChanged, notifyGraphDataChanged) => {
+    this.notifyDateTimeChanged = notifyDateTimeChanged;
     this.notifyRoomsVisibilityChanged = notifyRoomsVisibilityChanged;
     this.notifyRoomsColorChanged = notifyRoomsColorChanged;
     this.notifyGraphDataChanged = notifyGraphDataChanged;
@@ -69,6 +70,7 @@ export default class DashboardModel {
       this.colorList = this.calculateColor(this.averageTempList);
       this.notifyRoomsColorChanged(this.colorList);
       this.notifyGraphDataChanged(dataForGraph);
+      this.notifyDateTimeChanged(this.startDateTime, this.endDateTime);
       console.log(this.averageTempList);
       return result;
     }
