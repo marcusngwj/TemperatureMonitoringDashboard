@@ -5,13 +5,14 @@ import '../styles/datetimeview.scss';
 import 'rc-datetime-picker/dist/picker.css';
 
 /**
- * https://allenwooooo.github.io/rc-datetime-picker/
+ * DatetimePicker Reference: https://allenwooooo.github.io/rc-datetime-picker/
+ * DatetimePicker API: https://github.com/AllenWooooo/rc-datetime-picker
  */
 export default class DateTimeView extends Component {
   constructor() {
     super();
     this.state = {
-      moment: moment()
+      moment: moment('2013-10-01 00:00')
     };
   }
 
@@ -29,6 +30,8 @@ export default class DateTimeView extends Component {
         <DatetimePickerTrigger className="datetimeview-main"
                                onChange={this.handleChange}
                                moment={this.state.moment}
+                               minDate={moment('2013-10-01 00:00')}
+                               maxDate={moment('2013-12-31 23:49')}
         >
           <div className="datetimeview-background">
             <span>{this.props.label}</span>
