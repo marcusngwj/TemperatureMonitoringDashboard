@@ -1,12 +1,20 @@
 import { Meteor } from "meteor/meteor";
+import { Promise } from 'meteor/promise';
+import { ROOM_COLOR } from "../constants/RoomConstant";
 export default class DashboardModel {
   constructor() {
     this.selectedRooms = [true, true, true, true, true, true, true];
     this.roomModels = [];
     this.startDateTime = "2013-01-01T05:00:00Z";
     this.endDateTime = "2013-12-12T05:00:00Z";
-    this.queryRoom(this.startDateTime, this.endDateTime, "both")
+    this.colorList = [];
+    this.averageTempList = [];
+    this.result = this.queryRoom(this.startDateTime, this.endDateTime, "both");
+    // console.log("here");
+    // console.log(this.result);
+    // this.colorList = this.calculateRoomColor(this.result);
     this.updateRoomSelection = this.updateRoomSelection.bind(this);
+
   }
 
   updateStartDateTime = (dateTime) => {
@@ -30,59 +38,66 @@ export default class DashboardModel {
     console.log("Model is updating room selection...");
   }
 
-  queryRoom = (initial, end, point) => {
+  queryRoom = async (initial, end, point) => {
     if (Meteor.isClient) {
       if (point === "start") {
-        console.log("start");
         this.startDateTime = initial;
       } else if (point === "end") {
         this.endDateTime = end;
-        console.log("end");
       } else {
         this.startDateTime = initial;
         this.endDateTime = end;
-        console.log("both");
       }
-      // console.log("currnetstart is " + this.startDateTime);
-      // console.log("currentEnd is " + this.endDateTime);
-      var numSamples = 5000;
-      Meteor.call("queryData",
-        this.startDateTime, this.endDateTime, numSamples,
-        function (error, result) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log("queryData result is: " + result);
-            console.log("query data size is " + result.length);
-          }
-        }
-      );
+      var numSamples = 8000;
+      let promise = new Promise((resolve, reject) => {
+        Meteor.call("queryData", this.startDateTime, this.endDateTime, numSamples, (err, res) => {
+          if (err) reject('Something went wrong');
+          setTimeout(() => resolve(res), 2000);
+        });
+      });
+      let result = await promise;
+      this.averageTempList = this.calculateAverageTemperature(result);
+      this.colorList = this.calculateColor(this.averageTempList);
+      return result;
     }
   }
+
+  calculateAverageTemperature = (result) => {
+
+    var averageTempList = [];
+
+    for (let i = 0; i < result.length; i++) {
+      var currentTempSum = 0;
+      for (let j = 0; j < result[i].length; j++) {
+        let currIdx = result[i][j];
+        let splitStr = currIdx.split(",");
+        let currTime = splitStr[0];
+        let currTemp = splitStr[1];
+        currentTempSum += parseFloat(currTemp);
+      }
+      averageTempList[i] = (currentTempSum / result[i].length);
+    }
+
+    return averageTempList;
+  }
+  getSpecificRoomIdAverageTemperature = (roomId) => {
+    return this.averageTempList[roomId];
+  }
+  calculateColor = (averageTempList) => {
+    let colorList = [];
+    for (let i = 0; i < averageTempList.length; i++) {
+      if (averageTempList[i] <= 15) {
+        colorList[i] = ROOM_COLOR.DARK_BLUE;
+      } else if (averageTempList[i] <= 20) {
+        colorList[i] = ROOM_COLOR.LIGHT_BLUE;
+      } else if (averageTempList[i] <= 25) {
+        colorList[i] = ROOM_COLOR.GREY;
+      } else {
+        colorList[i] = ROOM_COLOR.RED
+      }
+    }
+    return colorList;
+    //this.colorList = colorList;
+  }
+
 }
-
-
-// if (Meteor.isClient) {
-//   // var startDate = "2013-10-02";
-//   // var endDate = "2013-10-03";
-//   // var startTime = "05:00:00";
-//   // var endTime = "05:30:00";
-//   // var numSamples = 1000;
-//   Template.main.events({
-//     // events go here
-//     'click .filter': function (startDate, endDate, startTime, endTime, numSamples) {
-//       Meteor.call("queryData",
-//         startDate, endDate, startTime, endTime, numSamples,
-//         function (error, result) {
-//           if (error) {
-//             console.log(error);
-//           } else {
-//             console.log("queryData result is: " + result);
-//             // return result;
-//           }
-//         }
-//       );
-//     }
-//   });
-// }
-

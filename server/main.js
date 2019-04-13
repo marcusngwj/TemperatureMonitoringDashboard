@@ -154,8 +154,6 @@ function getRandomizedSample(betweenData, numSamples) {
       var currentTimestamp = betweenData[idx].timestamp;
       if (map.get(currentTimestamp.toISOString()) != "1") {
         countSamples++;
-        // console.log("countSamples " + countSamples);
-        // console.log("idx is " + idx);
         map.set(currentTimestamp.toISOString(), "1");
         for (j = 0; j < betweenData[idx].value.length; j++) {
           var currentValue = betweenData[idx].value[j];
@@ -169,7 +167,6 @@ function getRandomizedSample(betweenData, numSamples) {
       }
     }
   }
-  // console.log(roomList[0].length);
   return roomList;
 }
 function FindBetweenData(startDateTime, endDateTime, numSamples) {
