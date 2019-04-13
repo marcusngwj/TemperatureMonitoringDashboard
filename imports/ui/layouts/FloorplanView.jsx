@@ -16,6 +16,28 @@ export default class FloorplanView extends Component {
     super(props);
   }
 
+  rooms = {
+    [ROOM_ID[0]]: this.room0,
+    [ROOM_ID[1]]: this.room1,
+    [ROOM_ID[2]]: this.room2,
+    [ROOM_ID[3]]: this.room3,
+    [ROOM_ID[4]]: this.room4,
+    [ROOM_ID[5]]: this.room5,
+    [ROOM_ID[6]]: this.room6,
+  }
+
+  componentDidMount() {
+    this.props.onRef(this)
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined)
+  }
+
+  updateRoomColor = (roomId, color) => {
+    this.rooms[ROOM_ID[0]].setRoomColor(color);
+  }
+
   render() {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 -0.5 1247 882"
@@ -25,36 +47,43 @@ export default class FloorplanView extends Component {
       >
         <RoomView d="M10.5 0h379v300h-379z" x="42" y="26" transform="translate(156.5 128.5)"
           id = {ROOM_ID[0]}
+          onRef={ref => (this.rooms[ROOM_ID[0]] = ref)}
           text = "UPPER LEVEL RESIDENTIAL LOUNGE"
           onClick = {this.props.onToggleRoom}
         />
         <RoomView d="M10 530h180v340H10z" x="31" y="19" transform="translate(67.5 685.5)"
           id = {ROOM_ID[1]}
+          onRef={ref => (this.rooms[ROOM_ID[1]] = ref)}
           text = "SINGLE BEDROOM"
           onClick = {this.props.onToggleRoom}
         />
         <RoomView d="M200 530h180v340H200z" x="31" y="19" transform="translate(257.5 685.5)"
           id = {ROOM_ID[2]}
+          onRef={ref => (this.rooms[ROOM_ID[2]] = ref)}
           text = "SINGLE BEDROOM"
           onClick = {this.props.onToggleRoom}
         />
         <RoomView d="M390 530h180v340H390z" x="31" y="19" transform="translate(447.5 685.5)"
           id = {ROOM_ID[3]}
+          onRef={ref => (this.rooms[ROOM_ID[3]] = ref)}
           text = "SINGLE BEDROOM"
           onClick = {this.props.onToggleRoom}
         />
         <RoomView d="M580 530h180v340H580z" x="31" y="19" transform="translate(637.5 685.5)"
           id = {ROOM_ID[4]}
+          onRef={ref => (this.rooms[ROOM_ID[4]] = ref)}
           text = "SINGLE BEDROOM"
           onClick = {this.props.onToggleRoom}
         />
         <RoomView d="M770 530h180v340H770z" x="31" y="19" transform="translate(827.5 685.5)"
           id = {ROOM_ID[5]}
+          onRef={ref => (this.rooms[ROOM_ID[5]] = ref)}
           text = "SINGLE BEDROOM"
           onClick = {this.props.onToggleRoom}
         />
         <RoomView d="M960 530h180v340H960z" x="31" y="19" transform="translate(1017.5 685.5)"
           id = {ROOM_ID[6]}
+          onRef={ref => (this.rooms[ROOM_ID[6]] = ref)}
           text = "SINGLE BEDROOM"
           onClick = {this.props.onToggleRoom}
         />

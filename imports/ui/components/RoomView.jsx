@@ -12,6 +12,20 @@ export default class RoomView extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.onRef(this)
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined)
+  }
+
+  setRoomColor = (newColor) => {
+    this.setState({
+      color: newColor
+    });
+  }
+
   handleOnClick = (e) => {
     this.setState({
       isVisible: !this.state.isVisible
@@ -23,11 +37,10 @@ export default class RoomView extends Component {
     return (
       <g onClick={this.handleOnClick} className="roomview">
         <path d={this.props.d} className={this.state.isVisible ? this.state.color : ROOM_COLOR.WHITE} />
-        <text
-          x={this.props.x}
-          y={this.props.y}
-          transform={this.props.transform}
-          className="room-text"
+        <text transform={this.props.transform}
+              className="room-text"
+              x={this.props.x}
+              y={this.props.y}
         >
           {this.props.text}
         </text>

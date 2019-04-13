@@ -9,6 +9,18 @@ export default class DashboardView extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    this.props.onRef(this)
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined)
+  }
+
+  updateRoomColor = (roomId, color) => {
+    this.floorplanview.updateRoomColor(roomId, color);
+  }
+
   render() {
     return (
       <div className="dashboardview">
@@ -21,7 +33,9 @@ export default class DashboardView extends Component {
         />
         <div className="dashboardview-graphics-container">
           <GraphView />
-          <FloorplanView onToggleRoom={this.props.onToggleRoom} />
+          <FloorplanView onRef={ref => (this.floorplanview = ref)}
+                         onToggleRoom={this.props.onToggleRoom} 
+          />
         </div>
       </div>
     );
