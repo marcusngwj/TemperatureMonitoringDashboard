@@ -19,14 +19,13 @@ export default class DashboardModel {
 
   updateStartDateTime = (dateTime) => {
     console.log("Model is updating Start Date Time...");
-    console.log(dateTime);
     console.log(dateTime.toISOString())
     this.queryRoom(dateTime.toISOString(), null, "start");
   }
 
   updateEndDateTime = (dateTime) => {
     console.log("Model is updating End Date Time...");
-    console.log(dateTime);
+    console.log(dateTime.toISOString())
     this.queryRoom(dateTime.toISOString(), null, "end");
   }
 
