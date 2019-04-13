@@ -25,6 +25,10 @@ export default class DashboardView extends Component {
     this.graphView.updateGraph();
   }
 
+  updateGraphVisibilityForRoom = (roomIndex, isVisible) => {
+    this.graphView.setVisibilityOfLinePlotForRoom(roomIndex, isVisible);
+  }
+
   render() {
     return (
       <div className="dashboardview">
