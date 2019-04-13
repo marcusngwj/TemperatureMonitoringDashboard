@@ -21,8 +21,8 @@ export default class DashboardView extends Component {
     this.floorplanView.updateRoomColor(roomId, color);
   }
 
-  updateGraph = () => {
-    this.graphView.updateGraph();
+  updateGraph = (graphData) => {
+    this.graphView.populateGraph(graphData);
   }
 
   updateGraphVisibilityForRoom = (roomIndex, isVisible) => {

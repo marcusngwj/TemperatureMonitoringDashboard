@@ -4,8 +4,8 @@ import { ROOM_COLOR } from "../constants/RoomConstant";
 
 export default class DashboardModel {
   constructor() {
-    this.startDateTime = "2013-01-01T05:00:00Z";
-    this.endDateTime = "2013-12-12T05:00:00Z";
+    this.startDateTime = "2013-10-01T05:00:00Z";
+    this.endDateTime = "2013-10-12T05:00:00Z";
     this.roomVisibilityList = [true, true, true, true, true, true, true];
     this.roomModels = [];
     this.colorList = [];
@@ -18,26 +18,18 @@ export default class DashboardModel {
     this.updateRoomVisibility = this.updateRoomVisibility.bind(this);
   }
 
-  setCallbacks = (notifyRoomsVisibilityChanged, notifyRoomsColorChanged) => {
+  setCallbacks = (notifyRoomsVisibilityChanged, notifyRoomsColorChanged, notifyGraphDataChanged) => {
     this.notifyRoomsVisibilityChanged = notifyRoomsVisibilityChanged;
     this.notifyRoomsColorChanged = notifyRoomsColorChanged;
+    this.notifyGraphDataChanged = notifyGraphDataChanged;
   }
 
   updateStartDateTime = (dateTime) => {
-    // console.log("Start Time: " + dateTime.toISOString())
     this.queryRoom(dateTime.toISOString(), null, "start");
-    // console.log("Finish queryRoom");
-
-    // this.notifyRoomsColorChanged(this.colorList);
   }
 
   updateEndDateTime = (dateTime) => {
-    // console.log("End Time: " + dateTime.toISOString())
-    // console.log("Finish queryRoom");
-
     this.queryRoom(null, dateTime.toISOString(), "end");
-
-    // this.notifyRoomsColorChanged(this.colorList);
   }
 
   updateMaxSamples = (numSamples) => {
@@ -65,7 +57,7 @@ export default class DashboardModel {
       let promise = new Promise((resolve, reject) => {
         Meteor.call("queryData", this.startDateTime, this.endDateTime, this.numSamples, (err, res) => {
           if (err) reject('Something went wrong');
-          setTimeout(() => resolve(res), 500);
+          setTimeout(() => resolve(res), 200);
         });
       });
       let result = await promise;
@@ -74,6 +66,7 @@ export default class DashboardModel {
       this.averageTempList = this.calculateAverageTemperature(result);
       this.colorList = this.calculateColor(this.averageTempList);
       this.notifyRoomsColorChanged(this.colorList);
+      this.notifyGraphDataChanged(result);
       console.log(this.averageTempList);
       return result;
     }

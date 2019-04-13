@@ -12,7 +12,7 @@ export default class GraphView extends Component {
     2013-10-01 00:00,0.0,10.5,20.2,30.0,14.2,15.5,26.7
     2013-10-02 00:00,12.9,14.5,26.2,28.8,10.9,12.2,14.7
     2013-10-03 00:00,24.7,28.2,12.8,16.2,20.1,24.4,28.6
-    2013-10-04 00:00,26.3,12.2,18.7,24.9,30.0,24.2,18.4
+    2013-10-04 00:00,26.3,   ,18.7,24.9,30.0,24.2,18.4
     2013-10-05 00:00,28.1,16.3,24.5,24.7,16.2,18.9,16.0
     2013-10-06 00:00,10.5,20.1,30.0,20.3,10.2,0.0,10.2
     2013-10-07 00:00,12.5,14.4,16.9,18.0,20.2,22.7,24.8
@@ -42,13 +42,12 @@ export default class GraphView extends Component {
     this.props.onInteractWithGraph(startDateTime, endDateTime);
   }
 
-  updateGraph = () => {
-    console.log("Inside graphview");
+  populateGraph = (graphData) => {
+    console.log(graphData);
   }
 
   setVisibilityOfLinePlotForRoom = (roomIndex, isVisible) => {
     this.dygraph.setVisibility(roomIndex, isVisible);
-    console.log("Setting room visibility");
   }
 
   render() {

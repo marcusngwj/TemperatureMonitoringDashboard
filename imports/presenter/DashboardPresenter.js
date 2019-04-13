@@ -10,7 +10,8 @@ export default class DashboardPresenter {
     this._view = view;
     this._model = model;
     this._model.setCallbacks(this.notifyRoomsVisibilityChanged,
-      this.notifyRoomsColorChanged);
+                             this.notifyRoomsColorChanged,
+                             this.notifyGraphDataChanged);
 
     Meteor.startup(() => {
       render(<this._view onRef={ref => (this._view = ref)}                  // To access methods from child: https://github.com/kriasoft/react-starter-kit/issues/909#issuecomment-252969542
@@ -56,6 +57,9 @@ export default class DashboardPresenter {
     for (let i = 0; i < colorList.length; i++) {
       this._view.updateRoomColor(ROOM_ID[i], colorList[i]);
     }
-    // console.log(colorList);
+  }
+
+  notifyGraphDataChanged = (graphData) => {
+    this._view.updateGraph(graphData);
   }
 }
