@@ -188,9 +188,8 @@ if (Meteor.isServer) {
     queryData: function (startDateTime, endDateTime, numSamples) {
       var sortedData = FindBetweenData(startDateTime, endDateTime, numSamples);
 
+
       return sortedData;
-      // return betweenData;
-      // return requiredData;
     }
   });
 }

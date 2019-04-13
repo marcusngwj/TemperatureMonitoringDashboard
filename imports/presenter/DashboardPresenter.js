@@ -10,16 +10,16 @@ export default class DashboardPresenter {
     this._view = view;
     this._model = model;
     this._model.setCallbacks(this.notifyRoomsVisibilityChanged,
-                             this.notifyRoomsColorChanged);
+      this.notifyRoomsColorChanged);
 
     Meteor.startup(() => {
       render(<this._view onRef={ref => (this._view = ref)}                  // To access methods from child: https://github.com/kriasoft/react-starter-kit/issues/909#issuecomment-252969542
-                         onChangeStartDateTime={this.changeStartDateTime}
-                         onChangeEndDateTime={this.changeEndDateTime}
-                         onChangeMaxSamples={this.changeMaxSamples}
-                         onToggleRoomVisibility={this.toggleRoomVisibility}
-                         onInteractWithGraph={this.interactWithGraph}
-             />, document.getElementById("react-target"));
+        onChangeStartDateTime={this.changeStartDateTime}
+        onChangeEndDateTime={this.changeEndDateTime}
+        onChangeMaxSamples={this.changeMaxSamples}
+        onToggleRoomVisibility={this.toggleRoomVisibility}
+        onInteractWithGraph={this.interactWithGraph}
+      />, document.getElementById("react-target"));
     });
   }
 
@@ -47,7 +47,7 @@ export default class DashboardPresenter {
   }
 
   notifyRoomsVisibilityChanged = (roomVisibilityList) => {
-    for (let i=0; i<roomVisibilityList.length; i++) {
+    for (let i = 0; i < roomVisibilityList.length; i++) {
       this._view.updateGraphVisibilityForRoom(i, roomVisibilityList[i]);
     }
   }
@@ -56,6 +56,6 @@ export default class DashboardPresenter {
     for (let i = 0; i < colorList.length; i++) {
       this._view.updateRoomColor(ROOM_ID[i], colorList[i]);
     }
-    console.log(colorList);
+    // console.log(colorList);
   }
 }
