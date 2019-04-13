@@ -31,8 +31,8 @@ export default class DashboardPresenter {
     this._model.updateEndDateTime(dateTime);
   }
 
-  changeMaxSamples = () => {
-    this._model.updateEndDateTime();
+  changeMaxSamples = (numSamples) => {
+    this._model.updateMaxSamples(numSamples);
   }
 
   toggleRoomSelection = (roomId) => {

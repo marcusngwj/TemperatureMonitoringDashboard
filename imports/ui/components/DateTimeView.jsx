@@ -9,8 +9,9 @@ import 'rc-datetime-picker/dist/picker.css';
  * DatetimePicker API: https://github.com/AllenWooooo/rc-datetime-picker
  */
 export default class DateTimeView extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    
     this.state = {
       moment: moment('2013-10-01 00:00')
     };

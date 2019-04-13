@@ -13,7 +13,7 @@ export default class ControlView extends Component {
           <DateTimeView className="start-date-time-view" label="Start" onChange={this.props.onChangeStartDateTime} />
           <DateTimeView className="end-date-time-view" label="End" onChange={this.props.onChangeEndDateTime} />
         </div>
-        <SliderView className="sliderview" />
+        <SliderView className="sliderview" onChange={this.props.onChangeMaxSamples}/>
       </div>
     );
   }

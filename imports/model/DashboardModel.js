@@ -35,8 +35,8 @@ export default class DashboardModel {
     this.notifyRoomsColorChanged(this.colorList);
   }
 
-  updateMaxSamples = () => {
-    console.log("Model is updating Max Samples...");
+  updateMaxSamples = (numSamples) => {
+    console.log("Num Samples chosen: " + numSamples);
   }
 
   // RoomIndex != roomId. RoomIndex is just the number
