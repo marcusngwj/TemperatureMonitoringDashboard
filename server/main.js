@@ -86,7 +86,7 @@ function sortData(betweenData, numSamples) {
   } else {
     roomList = getRandomizedSample(betweenData, numSamples);
   }
-  console.log(roomList[0][0]);
+  // console.log(roomList[0].length);
   return roomList;
 }
 
@@ -169,13 +169,12 @@ function getRandomizedSample(betweenData, numSamples) {
       }
     }
   }
+  // console.log(roomList[0].length);
   return roomList;
 }
-function FindBetweenData(startDate, endDate, startTime, endTime, numSamples) {
-  var startTimestamp = startDate + "T" + endTime + "Z";
-  var endTimestamp = endDate + "T" + endTime + "Z";
-  // console.log(startTimestamp);
-  // console.log(endTimestamp);
+function FindBetweenData(startDateTime, endDateTime, numSamples) {
+  var startTimestamp = startDateTime;
+  var endTimestamp = endDateTime;
   var betweenData = temperatureData.find({
     timestamp: {
       $gte: (new Date(startTimestamp)),
@@ -189,10 +188,10 @@ function FindBetweenData(startDate, endDate, startTime, endTime, numSamples) {
 }
 if (Meteor.isServer) {
   Meteor.methods({
-    queryData: function (startDate, endDate, startTime, endTime, numSamples) {
-      var sortedData = FindBetweenData(startDate, endDate, startTime, endTime, numSamples);
+    queryData: function (startDateTime, endDateTime, numSamples) {
+      var sortedData = FindBetweenData(startDateTime, endDateTime, numSamples);
 
-      return "test";
+      return sortedData;
       // return betweenData;
       // return requiredData;
     }
