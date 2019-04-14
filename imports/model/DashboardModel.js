@@ -77,16 +77,16 @@ export default class DashboardModel {
 
       this.averageTempList = this.calculateAverageTemperature(dataForCalculation);
       this.colorList = this.calculateColor(this.averageTempList);
-      this.notifyRoomsColorChanged(this.colorList);
       this.notifyGraphDataChanged(dataForGraph, temperatureRange);
+      this.notifyRoomsColorChanged(this.colorList);
       this.notifyDateTimeChanged(this.startDateTime, this.endDateTime);
+      this.notifyRoomsVisibilityChanged(this.roomVisibilityList);
       return result;
     }
   }
 
 
   calculateAverageTemperature = (result) => {
-
     var averageTempList = [];
 
     for (let i = 0; i < result.length; i++) {

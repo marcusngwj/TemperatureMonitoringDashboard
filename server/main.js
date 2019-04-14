@@ -44,6 +44,7 @@ function initializeTable() {
     }
   }
 }
+
 function insertData(currRoomId, currTimestamp, currTemperature) {
   var valueData = currRoomId + "," + currTemperature;
   temperatureData.insert({
@@ -51,6 +52,7 @@ function insertData(currRoomId, currTimestamp, currTemperature) {
     value: [valueData]
   });
 }
+
 function updateData(currRoomId, currTimestamp, currTemperature) {
   //   console.log("here");
   var valueData = currRoomId + "," + currTemperature;
@@ -193,6 +195,7 @@ function getRandomizedSample(betweenData, numSamples) {
   }
   return [roomList, graphFriendlyDataList];
 }
+
 function FindBetweenData(startDateTime, endDateTime, numSamples) {
   var startTimestamp = startDateTime;
   var endTimestamp = endDateTime;
@@ -207,12 +210,11 @@ function FindBetweenData(startDateTime, endDateTime, numSamples) {
   // console.log(betweenData);
   return sortedData;
 }
+
 if (Meteor.isServer) {
   Meteor.methods({
     queryData: function (startDateTime, endDateTime, numSamples) {
       var sortedData = FindBetweenData(startDateTime, endDateTime, numSamples);
-
-
       return sortedData;
     }
   });
