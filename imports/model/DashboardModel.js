@@ -12,7 +12,7 @@ export default class DashboardModel {
     this.roomModels = [];
     this.colorList = [];
     this.averageTempList = [];
-    this.numSamples = 8000;
+    this.numSamples = 300;
     this.result = this.queryRoom(this.startDateTime, this.endDateTime, "both", null);
   }
 
@@ -43,8 +43,8 @@ export default class DashboardModel {
   }
 
   updateMaxSamples = (numSamples) => {
-    console.log("Num Samples chosen: " + numSamples);
     this.numSamples = numSamples;
+    this.queryRoom(this.startDateTime, this.endDateTime, "both", null);
   }
 
   // RoomIndex != roomId. RoomIndex is just the number
