@@ -26,18 +26,46 @@ export default class GraphView extends Component {
       hideOverlayOnMouseOut: false,
       xlabel: "Date",
       ylabel: "Temperature / °C",
-      zoomCallback: this.interactWithGraph,
+      zoomCallback: this.onZoom,
+      clickCallback: this.onUnzoom
     });
   }
 
-  interactWithGraph = () => {
+  createDygraphWithTemperatureRange = (data, temperatureRange) => {
+    return new Dygraph(this.refs.dygraph, data, {
+      height: 430,
+      width: 600,
+      animatedZooms: true,
+      legend: 'always',
+      labels: [ "Date", "Room0", "Room1", "Room2", "Room3", "Room4", "Room5", "Room6" ],
+      labelsDiv: this.refs.legend,
+      hideOverlayOnMouseOut: false,
+      xlabel: "Date",
+      ylabel: "Temperature / °C",
+      valueRange: temperatureRange,
+      zoomCallback: this.onZoom,
+      clickCallback: this.onUnzoom
+    });
+  }
+
+  onZoom = () => {
     let startDateTime = this.dygraph.xAxisRange()[0];
     let endDateTime = this.dygraph.xAxisRange()[1];
-    this.props.onInteractWithGraph(startDateTime, endDateTime);
+    let temperatureLow = this.dygraph.yAxisRange()[0];
+    let temperatureHigh = this.dygraph.yAxisRange()[1];
+    this.props.onInteractWithGraph(startDateTime, endDateTime, temperatureLow, temperatureHigh);
+  }
+
+  onUnzoom = () => {
+    this.props.onResetZoom();
   }
 
   populateGraph = (graphData) => {
     this.dygraph = this.createDygraph(graphData);
+  }
+
+  populateGraphWithTemperatureRange = (graphData, temperatureRange) => {
+    this.dygraph = this.createDygraphWithTemperatureRange(graphData, temperatureRange);
   }
 
   setVisibilityOfLinePlotForRoom = (roomIndex, isVisible) => {

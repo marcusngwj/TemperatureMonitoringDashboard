@@ -16,11 +16,12 @@ export default class DashboardPresenter {
 
     Meteor.startup(() => {
       render(<this._view onRef={ref => (this._view = ref)}                  // To access methods from child: https://github.com/kriasoft/react-starter-kit/issues/909#issuecomment-252969542
-        onChangeStartDateTime={this.changeStartDateTime}
-        onChangeEndDateTime={this.changeEndDateTime}
-        onChangeMaxSamples={this.changeMaxSamples}
-        onToggleRoomVisibility={this.toggleRoomVisibility}
-        onInteractWithGraph={this.interactWithGraph}
+                         onChangeStartDateTime={this.changeStartDateTime}
+                         onChangeEndDateTime={this.changeEndDateTime}
+                         onChangeMaxSamples={this.changeMaxSamples}
+                         onToggleRoomVisibility={this.toggleRoomVisibility}
+                         onInteractWithGraph={this.interactWithGraph}
+                         onResetZoom={this.resetZoom}
       />, document.getElementById("react-target"));
     });
   }
@@ -42,14 +43,15 @@ export default class DashboardPresenter {
     this._model.updateRoomVisibility(roomIndex);
   }
 
-  interactWithGraph = (startDateTime, endDateTime) => {
-    // TODO: Change the startdate in model
-    // TODO: Change end date in model
-    console.log(moment(startDateTime), moment(endDateTime));
+  interactWithGraph = (startDateTime, endDateTime, temperatureLow, temperatureHigh) => {
+    this._model.updateGraphWithTemperatureRange(moment(startDateTime), moment(endDateTime), temperatureLow, temperatureHigh);
+  }
+
+  resetZoom = () => {
+    this._model.updateStartEndDateTimeToBeforeZoom();
   }
 
   notifyDateTimeChanged = (startDateTime, endDateTime) => {
-    console.log("[DashboardPresenter] notifyDateTimeChanged");
     this._view.updateDateTime(moment(startDateTime), moment(endDateTime));
   }
 
@@ -65,7 +67,12 @@ export default class DashboardPresenter {
     }
   }
 
-  notifyGraphDataChanged = (graphData) => {
-    this._view.updateGraph(graphData.join(""));
+  notifyGraphDataChanged = (graphData, temperatureRange) => {
+    if (temperatureRange == null) {
+      this._view.updateGraph(graphData.join(""));
+    }
+    else {
+      this._view.updateGraphWithTemperatureRange(graphData.join(""), temperatureRange);
+    }
   }
 }

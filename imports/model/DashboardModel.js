@@ -6,16 +6,14 @@ export default class DashboardModel {
   constructor() {
     this.startDateTime = "2013-10-01T05:00:00Z";
     this.endDateTime = "2013-10-12T05:00:00Z";
+    this.startDateTimeBeforeZoom = this.startDateTime;
+    this.endDateTimeBeforeZoom = this.endDateTime;
     this.roomVisibilityList = [true, true, true, true, true, true, true];
     this.roomModels = [];
     this.colorList = [];
     this.averageTempList = [];
     this.numSamples = 8000;
-    this.result = this.queryRoom(this.startDateTime, this.endDateTime, "both");
-    // console.log("here");
-    // console.log(this.result);
-    // this.colorList = this.calculateRoomColor(this.result);
-    this.updateRoomVisibility = this.updateRoomVisibility.bind(this);
+    this.result = this.queryRoom(this.startDateTime, this.endDateTime, "both", null);
   }
 
   setCallbacks = (notifyDateTimeChanged, notifyRoomsVisibilityChanged, notifyRoomsColorChanged, notifyGraphDataChanged) => {
@@ -26,11 +24,22 @@ export default class DashboardModel {
   }
 
   updateStartDateTime = (dateTime) => {
-    this.queryRoom(dateTime.toISOString(), null, "start");
+    this.queryRoom(dateTime.toISOString(), null, "start", null);
+    this.startDateTimeBeforeZoom = dateTime.toISOString();
   }
 
   updateEndDateTime = (dateTime) => {
-    this.queryRoom(null, dateTime.toISOString(), "end");
+    this.queryRoom(null, dateTime.toISOString(), "end", null);
+    this.endDateTimeBeforeZoom = dateTime.toISOString();
+  }
+
+  updateGraphWithTemperatureRange = (startDateTime, endDateTime, temperatureLow, temperatureHigh) => {
+    let temperatureRange = [temperatureLow, temperatureHigh];
+    this.queryRoom(startDateTime.toISOString(), endDateTime.toISOString(), "both", temperatureRange);
+  }
+
+  updateStartEndDateTimeToBeforeZoom = () => {
+    this.queryRoom(this.startDateTimeBeforeZoom, this.endDateTimeBeforeZoom, "both", null);
   }
 
   updateMaxSamples = (numSamples) => {
@@ -44,7 +53,7 @@ export default class DashboardModel {
     this.notifyRoomsVisibilityChanged(this.roomVisibilityList);
   }
 
-  queryRoom = async (initial, end, point) => {
+  queryRoom = async (initial, end, point, temperatureRange) => {
     if (Meteor.isClient) {
       if (point === "start") {
         this.startDateTime = initial;
@@ -69,9 +78,8 @@ export default class DashboardModel {
       this.averageTempList = this.calculateAverageTemperature(dataForCalculation);
       this.colorList = this.calculateColor(this.averageTempList);
       this.notifyRoomsColorChanged(this.colorList);
-      this.notifyGraphDataChanged(dataForGraph);
+      this.notifyGraphDataChanged(dataForGraph, temperatureRange);
       this.notifyDateTimeChanged(this.startDateTime, this.endDateTime);
-      console.log(this.averageTempList);
       return result;
     }
   }

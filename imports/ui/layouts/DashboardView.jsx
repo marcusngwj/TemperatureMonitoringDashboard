@@ -30,6 +30,10 @@ export default class DashboardView extends Component {
     this.graphView.populateGraph(graphData);
   }
 
+  updateGraphWithTemperatureRange = (graphData, temperatureRange) => {
+    this.graphView.populateGraphWithTemperatureRange(graphData, temperatureRange);
+  }
+
   updateGraphVisibilityForRoom = (roomIndex, isVisible) => {
     this.graphView.setVisibilityOfLinePlotForRoom(roomIndex, isVisible);
   }
@@ -48,6 +52,7 @@ export default class DashboardView extends Component {
         <div className="dashboardview-graphics-container">
           <GraphView onRef={ref => (this.graphView = ref)} 
                      onInteractWithGraph={this.props.onInteractWithGraph}
+                     onResetZoom={this.props.onResetZoom}
           />
           <FloorplanView onRef={ref => (this.floorplanView = ref)}
                          onToggleRoomVisibility={this.props.onToggleRoomVisibility} 
