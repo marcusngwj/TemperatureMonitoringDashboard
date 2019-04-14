@@ -69,10 +69,10 @@ export default class DashboardPresenter {
 
   notifyGraphDataChanged = (graphData, temperatureRange) => {
     if (temperatureRange == null) {
-      this._view.updateGraph(graphData.join(""));
+      this._view.updateGraph(graphData);
     }
     else {
-      this._view.updateGraphWithTemperatureRange(graphData.join(""), temperatureRange);
+      this._view.updateGraphWithTemperatureRange(graphData, temperatureRange);
     }
   }
 }

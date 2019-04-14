@@ -1,5 +1,12 @@
 .sliderview-main {
-  input {
-    width: 25em;
+  display: flex;
+  flex-direction: row;
+
+  .slider-container {
+    width: 80%;
+  }
+
+  .sliderview-text {
+    margin-left: 2em;
   }
 }

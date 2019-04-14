@@ -12,7 +12,7 @@ export default class DashboardModel {
     this.roomModels = [];
     this.colorList = [];
     this.averageTempList = [];
-    this.numSamples = 8000;
+    this.numSamples = 300;
     this.result = this.queryRoom(this.startDateTime, this.endDateTime, "both", null);
   }
 
@@ -43,8 +43,8 @@ export default class DashboardModel {
   }
 
   updateMaxSamples = (numSamples) => {
-    console.log("Num Samples chosen: " + numSamples);
     this.numSamples = numSamples;
+    this.queryRoom(this.startDateTime, this.endDateTime, "both", null);
   }
 
   // RoomIndex != roomId. RoomIndex is just the number
@@ -77,16 +77,16 @@ export default class DashboardModel {
 
       this.averageTempList = this.calculateAverageTemperature(dataForCalculation);
       this.colorList = this.calculateColor(this.averageTempList);
-      this.notifyRoomsColorChanged(this.colorList);
       this.notifyGraphDataChanged(dataForGraph, temperatureRange);
+      this.notifyRoomsColorChanged(this.colorList);
       this.notifyDateTimeChanged(this.startDateTime, this.endDateTime);
+      this.notifyRoomsVisibilityChanged(this.roomVisibilityList);
       return result;
     }
   }
 
 
   calculateAverageTemperature = (result) => {
-
     var averageTempList = [];
 
     for (let i = 0; i < result.length; i++) {
