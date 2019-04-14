@@ -7,7 +7,7 @@ export default class RoomView extends Component {
     super(props);
 
     this.state = {
-      color: ROOM_COLOR.LIGHT_BLUE,
+      color: ROOM_COLOR.GREY,
       isVisible: true
     }
   }

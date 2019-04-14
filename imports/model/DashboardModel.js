@@ -113,12 +113,18 @@ export default class DashboardModel {
     for (let i = 0; i < averageTempList.length; i++) {
       if (averageTempList[i] <= 15) {
         colorList[i] = ROOM_COLOR.DARK_BLUE;
-      } else if (averageTempList[i] <= 20) {
+      } 
+      else if (averageTempList[i] <= 20) {
+        colorList[i] = ROOM_COLOR.MIDDLE_BLUE;
+      } 
+      else if (averageTempList[i] <= 25) {
         colorList[i] = ROOM_COLOR.LIGHT_BLUE;
-      } else if (averageTempList[i] <= 25) {
-        colorList[i] = ROOM_COLOR.GREY;
-      } else {
-        colorList[i] = ROOM_COLOR.RED
+      } 
+      else if (averageTempList[i] > 25) {
+        colorList[i] = ROOM_COLOR.RED;
+      } 
+      else {
+        colorList[i] = ROOM_COLOR.GREY
       }
     }
     return colorList;
