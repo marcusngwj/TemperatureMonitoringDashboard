@@ -67,7 +67,7 @@ export default class DashboardModel {
       let promise = new Promise((resolve, reject) => {
         Meteor.call("queryData", this.startDateTime, this.endDateTime, this.numSamples, (err, res) => {
           if (err) reject('Something went wrong');
-          setTimeout(() => resolve(res), 200);
+          setTimeout(() => resolve(res), 100);
         });
       });
       let result = await promise;
@@ -113,16 +113,16 @@ export default class DashboardModel {
     for (let i = 0; i < averageTempList.length; i++) {
       if (averageTempList[i] <= 15) {
         colorList[i] = ROOM_COLOR.DARK_BLUE;
-      } 
+      }
       else if (averageTempList[i] <= 20) {
         colorList[i] = ROOM_COLOR.MIDDLE_BLUE;
-      } 
+      }
       else if (averageTempList[i] <= 25) {
         colorList[i] = ROOM_COLOR.LIGHT_BLUE;
-      } 
+      }
       else if (averageTempList[i] > 25) {
         colorList[i] = ROOM_COLOR.RED;
-      } 
+      }
       else {
         colorList[i] = ROOM_COLOR.GREY
       }

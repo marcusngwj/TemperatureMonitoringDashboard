@@ -157,10 +157,10 @@ function getRandomizedSample(betweenData, numSamples) {
   map.set(lastDataTimestamp.toISOString(), "1");
   var numData = betweenData.length;
 
-  var countInterval = parseInt(numData / numSamples);
+  var countInterval = parseInt(1 + (numData / numSamples));
   var loopIdx = 1;
   var countSamples = 1;
-  // console.log("countInterval is " + countInterval);
+
   if (countInterval == 1) {
     countInterval = 2;
   }
