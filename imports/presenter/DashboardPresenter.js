@@ -68,7 +68,6 @@ export default class DashboardPresenter {
   }
 
   notifyGraphDataChanged = (graphData, temperatureRange) => {
-    console.log(graphData);
     if (temperatureRange == null) {
       this._view.updateGraph(graphData);
     }

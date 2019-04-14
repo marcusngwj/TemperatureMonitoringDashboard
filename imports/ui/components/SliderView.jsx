@@ -24,15 +24,16 @@ export default class SliderView extends Component {
 
   render() {
     return (
-      <div className={this.props.className}>
-        <SliderWithTooltip className="sliderview-main"
-                           min={10}
-                           max={6000}
-                           value={this.state.value}
-                           onChange={this.handleChange}
-        />
-        <span>{this.state.value}</span>
-        <span>Samples</span>
+      <div className={"sliderview-main " + this.props.className}>
+        <div className="slider-container">
+          <SliderWithTooltip 
+                            min={10}
+                            max={6000}
+                            value={this.state.value}
+                            onChange={this.handleChange}
+          />
+        </div>
+        <span className="sliderview-text">{this.state.value} Samples</span>
       </div>
     );
   }
