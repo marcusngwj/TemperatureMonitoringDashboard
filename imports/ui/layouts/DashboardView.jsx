@@ -17,12 +17,21 @@ export default class DashboardView extends Component {
     this.props.onRef(undefined);
   }
 
+  updateDateTime = (startDateTime, endDateTime) => {
+    this.controlView.updateStartDateTime(startDateTime);
+    this.controlView.updateEndDateTime(endDateTime);
+  }
+
   updateRoomColor = (roomId, color) => {
     this.floorplanView.updateRoomColor(roomId, color);
   }
 
-  updateGraph = () => {
-    this.graphView.updateGraph();
+  updateGraph = (graphData) => {
+    this.graphView.populateGraph(graphData);
+  }
+
+  updateGraphWithTemperatureRange = (graphData, temperatureRange) => {
+    this.graphView.populateGraphWithTemperatureRange(graphData, temperatureRange);
   }
 
   updateGraphVisibilityForRoom = (roomIndex, isVisible) => {
@@ -35,13 +44,15 @@ export default class DashboardView extends Component {
         <h1 className="dashboardview-title">
           Temperature Monitoring Dashboard
         </h1>
-        <ControlView onChangeStartDateTime={this.props.onChangeStartDateTime}
+        <ControlView onRef={ref => (this.controlView = ref)} 
+                     onChangeStartDateTime={this.props.onChangeStartDateTime}
                      onChangeEndDateTime={this.props.onChangeEndDateTime}
                      onChangeMaxSamples={this.props.onChangeMaxSamples}
         />
         <div className="dashboardview-graphics-container">
           <GraphView onRef={ref => (this.graphView = ref)} 
                      onInteractWithGraph={this.props.onInteractWithGraph}
+                     onResetZoom={this.props.onResetZoom}
           />
           <FloorplanView onRef={ref => (this.floorplanView = ref)}
                          onToggleRoomVisibility={this.props.onToggleRoomVisibility} 

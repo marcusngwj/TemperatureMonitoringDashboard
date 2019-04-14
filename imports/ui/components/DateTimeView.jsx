@@ -17,12 +17,26 @@ export default class DateTimeView extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.onRef(this);
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined);
+  }
+
   handleChange = (moment) => {
     this.setState({
       moment
     });
 
     this.props.onChange(moment);
+  }
+
+  updateMoment = (newMoment) => {
+    this.setState({
+      moment: newMoment
+    });
   }
 
   render() {

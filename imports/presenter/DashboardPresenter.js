@@ -9,16 +9,19 @@ export default class DashboardPresenter {
   constructor(view, model) {
     this._view = view;
     this._model = model;
-    this._model.setCallbacks(this.notifyRoomsVisibilityChanged,
-      this.notifyRoomsColorChanged);
+    this._model.setCallbacks(this.notifyDateTimeChanged,
+                             this.notifyRoomsVisibilityChanged,
+                             this.notifyRoomsColorChanged,
+                             this.notifyGraphDataChanged);
 
     Meteor.startup(() => {
       render(<this._view onRef={ref => (this._view = ref)}                  // To access methods from child: https://github.com/kriasoft/react-starter-kit/issues/909#issuecomment-252969542
-        onChangeStartDateTime={this.changeStartDateTime}
-        onChangeEndDateTime={this.changeEndDateTime}
-        onChangeMaxSamples={this.changeMaxSamples}
-        onToggleRoomVisibility={this.toggleRoomVisibility}
-        onInteractWithGraph={this.interactWithGraph}
+                         onChangeStartDateTime={this.changeStartDateTime}
+                         onChangeEndDateTime={this.changeEndDateTime}
+                         onChangeMaxSamples={this.changeMaxSamples}
+                         onToggleRoomVisibility={this.toggleRoomVisibility}
+                         onInteractWithGraph={this.interactWithGraph}
+                         onResetZoom={this.resetZoom}
       />, document.getElementById("react-target"));
     });
   }
@@ -40,10 +43,16 @@ export default class DashboardPresenter {
     this._model.updateRoomVisibility(roomIndex);
   }
 
-  interactWithGraph = (startDateTime, endDateTime) => {
-    // TODO: Change the startdate in model
-    // TODO: Change end date in model
-    console.log(moment(startDateTime), moment(endDateTime));
+  interactWithGraph = (startDateTime, endDateTime, temperatureLow, temperatureHigh) => {
+    this._model.updateGraphWithTemperatureRange(moment(startDateTime), moment(endDateTime), temperatureLow, temperatureHigh);
+  }
+
+  resetZoom = () => {
+    this._model.updateStartEndDateTimeToBeforeZoom();
+  }
+
+  notifyDateTimeChanged = (startDateTime, endDateTime) => {
+    this._view.updateDateTime(moment(startDateTime), moment(endDateTime));
   }
 
   notifyRoomsVisibilityChanged = (roomVisibilityList) => {
@@ -56,6 +65,14 @@ export default class DashboardPresenter {
     for (let i = 0; i < colorList.length; i++) {
       this._view.updateRoomColor(ROOM_ID[i], colorList[i]);
     }
-    // console.log(colorList);
+  }
+
+  notifyGraphDataChanged = (graphData, temperatureRange) => {
+    if (temperatureRange == null) {
+      this._view.updateGraph(graphData.join(""));
+    }
+    else {
+      this._view.updateGraphWithTemperatureRange(graphData.join(""), temperatureRange);
+    }
   }
 }

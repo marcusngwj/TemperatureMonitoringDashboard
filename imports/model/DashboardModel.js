@@ -4,40 +4,42 @@ import { ROOM_COLOR } from "../constants/RoomConstant";
 
 export default class DashboardModel {
   constructor() {
-    this.startDateTime = "2013-01-01T05:00:00Z";
-    this.endDateTime = "2013-12-12T05:00:00Z";
+    this.startDateTime = "2013-10-01T05:00:00Z";
+    this.endDateTime = "2013-10-12T05:00:00Z";
+    this.startDateTimeBeforeZoom = this.startDateTime;
+    this.endDateTimeBeforeZoom = this.endDateTime;
     this.roomVisibilityList = [true, true, true, true, true, true, true];
     this.roomModels = [];
     this.colorList = [];
     this.averageTempList = [];
     this.numSamples = 8000;
-    this.result = this.queryRoom(this.startDateTime, this.endDateTime, "both");
-    // console.log("here");
-    // console.log(this.result);
-    // this.colorList = this.calculateRoomColor(this.result);
-    this.updateRoomVisibility = this.updateRoomVisibility.bind(this);
+    this.result = this.queryRoom(this.startDateTime, this.endDateTime, "both", null);
   }
 
-  setCallbacks = (notifyRoomsVisibilityChanged, notifyRoomsColorChanged) => {
+  setCallbacks = (notifyDateTimeChanged, notifyRoomsVisibilityChanged, notifyRoomsColorChanged, notifyGraphDataChanged) => {
+    this.notifyDateTimeChanged = notifyDateTimeChanged;
     this.notifyRoomsVisibilityChanged = notifyRoomsVisibilityChanged;
     this.notifyRoomsColorChanged = notifyRoomsColorChanged;
+    this.notifyGraphDataChanged = notifyGraphDataChanged;
   }
 
   updateStartDateTime = (dateTime) => {
-    // console.log("Start Time: " + dateTime.toISOString())
-    this.queryRoom(dateTime.toISOString(), null, "start");
-    // console.log("Finish queryRoom");
-
-    // this.notifyRoomsColorChanged(this.colorList);
+    this.queryRoom(dateTime.toISOString(), null, "start", null);
+    this.startDateTimeBeforeZoom = dateTime.toISOString();
   }
 
   updateEndDateTime = (dateTime) => {
-    // console.log("End Time: " + dateTime.toISOString())
-    // console.log("Finish queryRoom");
+    this.queryRoom(null, dateTime.toISOString(), "end", null);
+    this.endDateTimeBeforeZoom = dateTime.toISOString();
+  }
 
-    this.queryRoom(null, dateTime.toISOString(), "end");
+  updateGraphWithTemperatureRange = (startDateTime, endDateTime, temperatureLow, temperatureHigh) => {
+    let temperatureRange = [temperatureLow, temperatureHigh];
+    this.queryRoom(startDateTime.toISOString(), endDateTime.toISOString(), "both", temperatureRange);
+  }
 
-    // this.notifyRoomsColorChanged(this.colorList);
+  updateStartEndDateTimeToBeforeZoom = () => {
+    this.queryRoom(this.startDateTimeBeforeZoom, this.endDateTimeBeforeZoom, "both", null);
   }
 
   updateMaxSamples = (numSamples) => {
@@ -51,7 +53,7 @@ export default class DashboardModel {
     this.notifyRoomsVisibilityChanged(this.roomVisibilityList);
   }
 
-  queryRoom = async (initial, end, point) => {
+  queryRoom = async (initial, end, point, temperatureRange) => {
     if (Meteor.isClient) {
       if (point === "start") {
         this.startDateTime = initial;
@@ -65,16 +67,19 @@ export default class DashboardModel {
       let promise = new Promise((resolve, reject) => {
         Meteor.call("queryData", this.startDateTime, this.endDateTime, this.numSamples, (err, res) => {
           if (err) reject('Something went wrong');
-          setTimeout(() => resolve(res), 500);
+          setTimeout(() => resolve(res), 200);
         });
       });
       let result = await promise;
 
+      let dataForCalculation = result[0];
+      let dataForGraph = result[1];
 
-      this.averageTempList = this.calculateAverageTemperature(result);
+      this.averageTempList = this.calculateAverageTemperature(dataForCalculation);
       this.colorList = this.calculateColor(this.averageTempList);
       this.notifyRoomsColorChanged(this.colorList);
-      console.log(this.averageTempList);
+      this.notifyGraphDataChanged(dataForGraph, temperatureRange);
+      this.notifyDateTimeChanged(this.startDateTime, this.endDateTime);
       return result;
     }
   }
@@ -108,12 +113,18 @@ export default class DashboardModel {
     for (let i = 0; i < averageTempList.length; i++) {
       if (averageTempList[i] <= 15) {
         colorList[i] = ROOM_COLOR.DARK_BLUE;
-      } else if (averageTempList[i] <= 20) {
+      } 
+      else if (averageTempList[i] <= 20) {
+        colorList[i] = ROOM_COLOR.MIDDLE_BLUE;
+      } 
+      else if (averageTempList[i] <= 25) {
         colorList[i] = ROOM_COLOR.LIGHT_BLUE;
-      } else if (averageTempList[i] <= 25) {
-        colorList[i] = ROOM_COLOR.GREY;
-      } else {
-        colorList[i] = ROOM_COLOR.RED
+      } 
+      else if (averageTempList[i] > 25) {
+        colorList[i] = ROOM_COLOR.RED;
+      } 
+      else {
+        colorList[i] = ROOM_COLOR.GREY
       }
     }
     return colorList;
