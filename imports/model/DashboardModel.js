@@ -12,7 +12,7 @@ export default class DashboardModel {
     this.roomModels = [];
     this.colorList = [];
     this.averageTempList = [];
-    this.numSamples = 300;
+    this.numSamples = 1000;
     this.result = this.queryRoom(this.startDateTime, this.endDateTime, "both", null);
   }
 

@@ -11,7 +11,7 @@ export default class SliderView extends Component {
     super(props);
 
     this.state = {
-      value: 300
+      value: 1000
     }
   }
 
