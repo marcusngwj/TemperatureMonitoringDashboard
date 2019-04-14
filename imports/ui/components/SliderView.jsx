@@ -18,7 +18,7 @@ export default class SliderView extends Component {
     return (
       <div className={this.props.className}>
         <div className="sliderview-main">
-          <input type="range" min="1" max="100" value={this.state.value} onChange={this.handleOnChange} />
+          <input type="range" min="10" max="6000" value={this.state.value} onChange={this.handleOnChange} />
           <span>{this.state.value}</span>
           <span>Samples</span>
         </div>

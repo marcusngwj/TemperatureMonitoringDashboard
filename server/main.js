@@ -118,12 +118,15 @@ function getRandomizedSample(betweenData, numSamples) {
     return [roomList, graphFriendlyDataList];
   }
 
+  let graphFriendlyDataList = [];
+
   var firstData = betweenData[0];
   var lastData = betweenData[betweenData.length - 1];
 
   var firstDataTimestamp = betweenData[0].timestamp;
   var lastDataTimestamp = betweenData[betweenData.length - 1].timestamp;
 
+  let timestampAndTemperatures = ["","","","","","",""];
   for (i = 0; i < firstData.value.length; i++) {
     var currentValue = firstData.value[i];
     var splitValue = currentValue.split(",");
@@ -131,8 +134,11 @@ function getRandomizedSample(betweenData, numSamples) {
     var currentTemperature = splitValue[1];
     var stringToPush = firstDataTimestamp.toISOString() + "," + currentTemperature;
     roomList[parseInt(currentRoomid)].push(stringToPush);
+    timestampAndTemperatures[currentRoomid] = currentTemperature.toString();
   }
+  graphFriendlyDataList.push(moment(firstDataTimestamp).format('YYYY-MM-DD HH:mm')+","+timestampAndTemperatures.toString()+"\n");
 
+  timestampAndTemperatures = ["","","","","","",""];
   for (k = 0; k < lastData.value.length; k++) {
     var currentValue = lastData.value[k];
     var splitValue = currentValue.split(",");
@@ -140,7 +146,9 @@ function getRandomizedSample(betweenData, numSamples) {
     var currentTemperature = splitValue[1];
     var stringToPush = lastDataTimestamp.toISOString() + "," + currentTemperature;
     roomList[parseInt(currentRoomid)].push(stringToPush);
+    timestampAndTemperatures[currentRoomid] = currentTemperature.toString();
   }
+  graphFriendlyDataList.push(moment(lastDataTimestamp).format('YYYY-MM-DD HH:mm')+","+timestampAndTemperatures.toString()+"\n");
 
   var map = new Map();
   map.set(firstDataTimestamp.toISOString(), "1");
@@ -164,6 +172,7 @@ function getRandomizedSample(betweenData, numSamples) {
         break;
       }
 
+      timestampAndTemperatures = ["","","","","","",""];
       var currentTimestamp = betweenData[idx].timestamp;
       if (map.get(currentTimestamp.toISOString()) != "1") {
         countSamples++;
@@ -176,11 +185,13 @@ function getRandomizedSample(betweenData, numSamples) {
           var stringToPush = currentTimestamp.toISOString() + "," + currentTemperature;
 
           roomList[parseInt(currentRoomid)].push(stringToPush);
+          timestampAndTemperatures[currentRoomid] = currentTemperature.toString();
         }
+        graphFriendlyDataList.push(moment(currentTimestamp).format('YYYY-MM-DD HH:mm')+","+timestampAndTemperatures.toString()+"\n");
       }
     }
   }
-  return [roomList, []];
+  return [roomList, [graphFriendlyDataList]];
 }
 function FindBetweenData(startDateTime, endDateTime, numSamples) {
   var startTimestamp = startDateTime;
