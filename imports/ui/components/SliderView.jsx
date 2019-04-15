@@ -19,7 +19,10 @@ export default class SliderView extends Component {
     this.setState({
       value: newValue
     });
-    this.props.onChange(newValue);
+  }
+
+  handleAfterChange = () => {
+    this.props.onChange(this.state.value);
   }
 
   render() {
@@ -27,10 +30,11 @@ export default class SliderView extends Component {
       <div className={"sliderview-main " + this.props.className}>
         <div className="slider-container">
           <SliderWithTooltip 
-                            min={10}
+                            min={100}
                             max={6000}
                             value={this.state.value}
                             onChange={this.handleChange}
+                            onAfterChange={this.handleAfterChange}
           />
         </div>
         <span className="sliderview-text">{this.state.value} Samples</span>
