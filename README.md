@@ -19,6 +19,8 @@ meteor npm install
 ```
 meteor
 ```
+> Note: The initial load will take about 3mins due to the insertion of data into the database
+
 ## References
 - [Meteor with React Tutorial](https://www.meteor.com/tutorials/react/creating-an-app)
 - [Application Structure](https://guide.meteor.com/structure.html)
