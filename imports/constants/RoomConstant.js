@@ -1,10 +1,10 @@
-// Map to the class names in room.scss
+// Map to the class names in room.scss and legendcolorboxstyle.scss
 export const ROOM_COLOR = {
   WHITE: 'room-background-white',
   GREY: 'room-background-grey',
   RED: 'room-background-red',
   DARK_BLUE: 'room-background-darkBlue',
-  MIDDLE_BLUE: 'room-background-middleBlue',
+  MEDIUM_BLUE: 'room-background-mediumBlue',
   LIGHT_BLUE: 'room-background-lightBlue'
 };
 
