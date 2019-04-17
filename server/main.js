@@ -207,7 +207,7 @@ function FindBetweenData(startDateTime, endDateTime, numSamples) {
   }, {
       sort: { timestamp: 1 }
     }).fetch()
-  console.log(betweenData);
+  // console.log(betweenData);
   var sortedData = sortData(betweenData, numSamples);
   // console.log(betweenData);
   return sortedData;
