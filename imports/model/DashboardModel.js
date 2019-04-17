@@ -9,11 +9,11 @@ export default class DashboardModel {
     this.startDateTimeBeforeZoom = this.startDateTime;
     this.endDateTimeBeforeZoom = this.endDateTime;
     this.roomVisibilityList = [true, true, true, true, true, true, true];
-    this.roomModels = [];
     this.colorList = [];
     this.averageTempList = [];
     this.numSamples = 1000;
-    this.result = this.queryRoom(this.startDateTime, this.endDateTime, "both", null);
+    
+    this.queryRoom(this.startDateTime, this.endDateTime, "both", null);
   }
 
   setCallbacks = (notifyDateTimeChanged, notifyRoomsVisibilityChanged, notifyRoomsColorChanged, notifyGraphDataChanged) => {
