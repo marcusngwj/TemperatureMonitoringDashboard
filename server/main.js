@@ -204,7 +204,9 @@ function FindBetweenData(startDateTime, endDateTime, numSamples) {
       $gte: (new Date(startTimestamp)),
       $lt: (new Date(endTimestamp))
     }
-  }).fetch()
+  }, {
+      sort: { timestamp: 1 }
+    }).fetch()
   // console.log(betweenData);
   var sortedData = sortData(betweenData, numSamples);
   // console.log(betweenData);
