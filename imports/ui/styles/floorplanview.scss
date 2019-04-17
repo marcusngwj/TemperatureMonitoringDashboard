@@ -1,17 +1,26 @@
-.floorplanview {
-  .C {
-    stroke-miterlimit:10;
+.floorplanview-main {
+  .floorplan {
+    .C {
+      stroke-miterlimit:10;
+    }
+    
+    .door-entrance {
+      fill: #fff;
+    }
+    
+    .door-swing {
+      fill: none;
+    }
+    
+    .outline {
+      stroke: #000;
+    }
   }
   
-  .door-entrance {
-    fill:#fff;
-  }
-  
-  .door-swing {
-    fill:none;
-  }
-  
-  .outline {
-    stroke:#000;
+  .floorplan-legend {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 1em;
   }
 }

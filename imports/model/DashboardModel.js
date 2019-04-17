@@ -115,7 +115,7 @@ export default class DashboardModel {
         colorList[i] = ROOM_COLOR.DARK_BLUE;
       }
       else if (averageTempList[i] <= 20) {
-        colorList[i] = ROOM_COLOR.MIDDLE_BLUE;
+        colorList[i] = ROOM_COLOR.MEDIUM_BLUE;
       }
       else if (averageTempList[i] <= 25) {
         colorList[i] = ROOM_COLOR.LIGHT_BLUE;

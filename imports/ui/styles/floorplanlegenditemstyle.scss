@@ -1,0 +1,42 @@
+@import "color";
+
+@mixin legend-color-box-properties($color) {
+  width: 1em;
+  height: 1em;
+  background-color: $color;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.floorplanlegenditem-main {
+  display: flex;
+  flex-direction: row;
+
+  .room-background-white {
+    @include legend-color-box-properties($room-background-white);
+  }
+
+  .room-background-grey {
+    @include legend-color-box-properties($room-background-grey);
+  }
+
+  .room-background-red {
+    @include legend-color-box-properties($room-background-red);
+  }
+  
+  .room-background-darkBlue {
+    @include legend-color-box-properties($room-background-dark-blue);
+  }
+
+  .room-background-mediumBlue {
+    @include legend-color-box-properties($room-background-medium-blue);
+  }
+
+  .room-background-lightBlue {
+    @include legend-color-box-properties($room-background-light-blue);
+  }
+
+  .legend-text {
+    margin-left: 0.3em;
+  }
+}
